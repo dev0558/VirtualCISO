@@ -1,0 +1,45 @@
+# Control library. Control IDs must be double-checked against the official
+# ISO/IEC 27001:2022 Annex A and NIST CSF 2.0 documents by the compliance lead.
+# Titles are paraphrased (readiness guidance), not reproduced standard text.
+frameworks:
+  - code: iso27001
+    name: ISO 27001:2022
+    version: "2022"
+    controls:
+      - {code: A.5.1,  category: Organizational, title: Policies for information security, description: "Information security policy and topic-specific policies are defined, approved by management, published and reviewed."}
+      - {code: A.5.2,  category: Organizational, title: Information security roles and responsibilities, description: "Security roles and responsibilities are defined and allocated according to organisational needs."}
+      - {code: A.5.15, category: Access control, title: Access control, description: "Rules to control physical and logical access to information and assets are established and implemented."}
+      - {code: A.5.16, category: Access control, title: Identity management, description: "The full life cycle of identities is managed, including timely removal of leavers and stale accounts."}
+      - {code: A.5.17, category: Access control, title: Authentication information, description: "Allocation and management of authentication information (passwords, keys, MFA factors) is controlled."}
+      - {code: A.5.18, category: Access control, title: Access rights, description: "Access rights are provisioned, reviewed, modified and removed in line with policy."}
+      - {code: A.5.19, category: Supplier relationships, title: Information security in supplier relationships, description: "Processes are defined to manage security risks of supplier products and services."}
+      - {code: A.5.20, category: Supplier relationships, title: Security within supplier agreements, description: "Relevant security requirements are agreed with each supplier."}
+      - {code: A.5.21, category: Supplier relationships, title: ICT supply chain security, description: "Processes manage security risks associated with the ICT product and service supply chain."}
+      - {code: A.5.22, category: Supplier relationships, title: Monitoring and review of supplier services, description: "Supplier security practices and service delivery are regularly monitored and reviewed."}
+      - {code: A.5.37, category: Organizational, title: Documented operating procedures, description: "Operating procedures for information processing facilities are documented and available."}
+      - {code: A.8.2,  category: Technological, title: Privileged access rights, description: "Allocation and use of privileged access rights is restricted and managed."}
+      - {code: A.8.5,  category: Technological, title: Secure authentication, description: "Secure authentication technologies (such as MFA) are implemented based on access restrictions."}
+      - {code: A.8.8,  category: Technological, title: Management of technical vulnerabilities, description: "Information about technical vulnerabilities is obtained, exposure evaluated and measures taken."}
+      - {code: A.8.9,  category: Technological, title: Configuration management, description: "Security configurations of hardware, software, services and networks are established and monitored."}
+      - {code: A.8.13, category: Technological, title: Information backup, description: "Backup copies of information, software and systems are maintained and regularly tested."}
+      - {code: A.8.15, category: Technological, title: Logging, description: "Logs recording activities, exceptions and faults are produced, stored, protected and analysed."}
+      - {code: A.8.16, category: Technological, title: Monitoring activities, description: "Networks, systems and applications are monitored for anomalous behaviour."}
+      - {code: A.8.24, category: Technological, title: Use of cryptography, description: "Rules for the effective use of cryptography, including key and secret management, are defined and implemented."}
+
+  - code: nistcsf
+    name: NIST CSF 2.0
+    version: "2.0"
+    controls:
+      - {code: GV.PO, category: Govern,   title: Policy, description: "Organisational cybersecurity policy is established, communicated and enforced."}
+      - {code: GV.RR, category: Govern,   title: Roles, Responsibilities, and Authorities, description: "Cybersecurity roles, responsibilities and authorities are established and communicated."}
+      - {code: GV.RM, category: Govern,   title: Risk Management Strategy, description: "Risk priorities, constraints and risk appetite are established and used to support decisions."}
+      - {code: GV.SC, category: Govern,   title: Cybersecurity Supply Chain Risk Management, description: "Supply chain risk management processes are identified, established and managed."}
+      - {code: ID.AM, category: Identify, title: Asset Management, description: "Assets (data, hardware, software, accounts, services) are identified and managed consistent with risk."}
+      - {code: ID.RA, category: Identify, title: Risk Assessment, description: "The cybersecurity risk to the organisation, assets and individuals is understood."}
+      - {code: PR.AA, category: Protect,  title: Identity Management, Authentication, and Access Control, description: "Access to assets is limited to authorised users, services and hardware and managed commensurate with risk."}
+      - {code: PR.DS, category: Protect,  title: Data Security, description: "Data is managed consistent with the risk strategy to protect confidentiality, integrity and availability."}
+      - {code: PR.PS, category: Protect,  title: Platform Security, description: "Hardware, software and services are managed consistent with risk, including secure configuration."}
+      - {code: DE.CM, category: Detect,   title: Continuous Monitoring, description: "Assets are monitored to find anomalies, indicators of compromise and other potentially adverse events."}
+      - {code: DE.AE, category: Detect,   title: Adverse Event Analysis, description: "Anomalies and potential adverse events are analysed to characterise events and detect incidents."}
+      - {code: RS.MA, category: Respond,  title: Incident Management, description: "Responses to detected cybersecurity incidents are managed."}
+      - {code: RC.RP, category: Recover,  title: Incident Recovery Plan Execution, description: "Restoration activities are performed to ensure operational availability of affected systems and services."}

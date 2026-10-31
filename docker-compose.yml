@@ -1,0 +1,87 @@
+name: securavantage
+
+x-api-env: &api-env
+  ENV: ${ENV:-development}
+  DATABASE_URL: postgresql+psycopg://vciso_app:${APP_DB_PASSWORD}@postgres:5432/vciso
+  MIGRATION_DATABASE_URL: postgresql+psycopg://vciso:${POSTGRES_PASSWORD}@postgres:5432/vciso
+  REDIS_URL: redis://redis:6379/0
+  SECRET_KEY: ${SECRET_KEY}
+  CREDENTIALS_ENCRYPTION_KEY: ${CREDENTIALS_ENCRYPTION_KEY}
+  COOKIE_SECURE: ${COOKIE_SECURE:-false}
+  S3_ENDPOINT_URL: http://objectstore:8333
+  S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+  S3_SECRET_KEY: ${S3_SECRET_KEY}
+  S3_BUCKET: vciso-evidence
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-5-5}
+  PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:3000}
+  DEMO_PASSWORD: ${DEMO_PASSWORD:-}
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: vciso
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: vciso
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    ports: ["127.0.0.1:55432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vciso -d vciso"]
+      interval: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:56379:6379"]
+
+  # S3-compatible evidence store (SeaweedFS, Apache-2.0). MinIO no longer ships community images.
+  objectstore:
+    image: chrislusf/seaweedfs:3.97
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        printf '{"identities":[{"name":"vciso","credentials":[{"accessKey":"%s","secretKey":"%s"}],"actions":["Admin","Read","Write","List","Tagging"]}]}' "$$S3_ACCESS_KEY" "$$S3_SECRET_KEY" > /tmp/s3.json
+        exec weed server -dir=/data -ip.bind=0.0.0.0 -s3 -s3.port=8333 -s3.config=/tmp/s3.json
+    environment:
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+    volumes: [objectdata:/data]
+    ports: ["127.0.0.1:8333:8333"]
+
+  api:
+    build: { context: ., dockerfile: apps/api/Dockerfile }
+    environment: *api-env
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_started }
+      objectstore: { condition: service_started }
+    ports: ["127.0.0.1:8000:8000"]
+
+  worker:
+    build: { context: ., dockerfile: apps/api/Dockerfile }
+    command: celery -A vciso_api.tasks worker --loglevel=INFO --concurrency=2
+    environment: *api-env
+    depends_on: [api]
+
+  beat:
+    build: { context: ., dockerfile: apps/api/Dockerfile }
+    command: celery -A vciso_api.tasks beat --loglevel=INFO --schedule=/tmp/celerybeat-schedule
+    environment: *api-env
+    depends_on: [api]
+
+  web:
+    build:
+      context: apps/web
+      args: { API_INTERNAL_URL: "http://api:8000" }
+    environment:
+      API_INTERNAL_URL: http://api:8000
+    depends_on: [api]
+    ports: ["127.0.0.1:3000:3000"]
+
+volumes:
+  pgdata:
+  objectdata:

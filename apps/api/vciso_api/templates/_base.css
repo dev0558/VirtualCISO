@@ -1,0 +1,24 @@
+@page { size: A4; margin: 18mm 16mm 20mm; @bottom-left { content: "SecuraVantage · Readiness guidance, not a certification"; font-size: 7.5pt; color: #71717a; } @bottom-right { content: "Page " counter(page) " of " counter(pages); font-size: 7.5pt; color: #71717a; } }
+* { box-sizing: border-box; }
+body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #18181b; font-size: 9pt; line-height: 1.45; }
+h1 { font-size: 18pt; margin: 0 0 2mm; letter-spacing: -0.01em; }
+h2 { font-size: 11pt; margin: 7mm 0 2.5mm; padding-bottom: 1.5mm; border-bottom: 0.5pt solid #e4e4e7; }
+.muted { color: #71717a; }
+.meta { display: flex; gap: 8mm; margin: 3mm 0 6mm; font-size: 8.5pt; }
+.meta div span { display: block; color: #71717a; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .04em; }
+.kpis { display: flex; gap: 4mm; margin-bottom: 4mm; }
+.kpi { flex: 1; border: 0.5pt solid #e4e4e7; border-radius: 2mm; padding: 3mm 4mm; }
+.kpi .v { font-size: 16pt; font-weight: 600; font-variant-numeric: tabular-nums; }
+.kpi .l { font-size: 7.5pt; color: #71717a; text-transform: uppercase; letter-spacing: .04em; }
+table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+th { text-align: left; font-weight: 600; color: #52525b; font-size: 7pt; text-transform: uppercase; letter-spacing: .04em; border-bottom: 0.75pt solid #d4d4d8; padding: 1.5mm 2mm; }
+td { border-bottom: 0.5pt solid #f4f4f5; padding: 1.8mm 2mm; vertical-align: top; }
+tr { page-break-inside: avoid; }
+.mono { font-family: "Menlo", "Courier New", monospace; font-size: 7pt; color: #52525b; word-break: break-all; }
+.pill { display: inline-block; padding: 0.4mm 2mm; border-radius: 6mm; font-size: 7pt; font-weight: 600; border: 0.5pt solid; }
+.passed { color: #166534; border-color: #bbf7d0; background: #f0fdf4; }
+.failed { color: #991b1b; border-color: #fecaca; background: #fef2f2; }
+.warning, .in_progress { color: #92400e; border-color: #fde68a; background: #fffbeb; }
+.skipped, .manual_verification, .not_run { color: #52525b; border-color: #e4e4e7; background: #fafafa; }
+ul { margin: 0; padding-left: 4.5mm; } li { margin-bottom: 1.2mm; }
+.disclaimer { margin-top: 8mm; font-size: 7.5pt; color: #71717a; border-top: 0.5pt solid #e4e4e7; padding-top: 2mm; }

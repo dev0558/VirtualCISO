@@ -1,0 +1,26 @@
+<html><head><meta charset="utf-8"><style>{% include "_base.css" %}</style></head><body>
+<div class="muted" style="font-size:8pt;letter-spacing:.06em;text-transform:uppercase">Auditor evidence dossier</div>
+<h1>{{ framework }} — {{ org.name }}</h1>
+<div class="meta">
+  <div><span>Generated</span>{{ generated_at }}</div>
+  <div><span>Organisation</span>{{ org.name }}</div>
+  <div><span>Industry</span>{{ org.industry or "—" }}</div>
+</div>
+<div class="kpis">
+  <div class="kpi"><div class="v">{{ score }}%</div><div class="l">Controls passing</div></div>
+  <div class="kpi"><div class="v">{{ controls | selectattr("status","equalto","failed") | list | length }}</div><div class="l">Failing controls</div></div>
+  <div class="kpi"><div class="v">{{ controls | selectattr("status","equalto","manual_verification") | list | length }}</div><div class="l">Manual verification</div></div>
+  <div class="kpi"><div class="v">{{ controls | length }}</div><div class="l">Controls in scope</div></div>
+</div>
+<h2>Control status</h2>
+<table><thead><tr><th style="width:12%">Control</th><th>Title</th><th style="width:14%">Status</th><th style="width:12%">Source</th><th style="width:18%">Policies</th></tr></thead><tbody>
+{% for c in controls %}<tr><td><strong>{{ c.code }}</strong></td><td>{{ c.title }}<div class="muted">{{ c.category }}</div></td>
+<td><span class="pill {{ c.status }}">{{ c.status | replace("_"," ") }}</span></td><td>{{ c.evidenceSource }}</td><td>{{ c.policies | join(", ") or "—" }}</td></tr>{% endfor %}
+</tbody></table>
+<h2>Automated evidence</h2>
+<table><thead><tr><th style="width:11%">Control</th><th style="width:28%">Check</th><th style="width:10%">Result</th><th style="width:16%">Collected</th><th>SHA-256</th></tr></thead><tbody>
+{% for c in controls %}{% for e in c.evidence %}<tr><td>{{ c.code }}</td><td><strong>{{ e.check }}</strong><div class="muted">{{ e.name }}</div></td>
+<td><span class="pill {{ e.status }}">{{ e.status }}</span></td><td>{{ e.collected_at }}</td><td class="mono">{{ e.sha256 }}</td></tr>{% endfor %}{% endfor %}
+</tbody></table>
+<div class="disclaimer">Evidence hashes are SHA-256 over the canonical JSON of each sanitized check result and can be verified against the stored evidence objects. This dossier supports audit readiness; it is not a certification and does not guarantee an audit outcome.</div>
+</body></html>

@@ -1,0 +1,26 @@
+category,question
+Authentication & Access,Do you enforce multi-factor authentication (MFA) for all users and administrators?
+Authentication & Access,How many users hold the highest administrative privileges in your identity provider and how is this access controlled?
+Authentication & Access,Do you block legacy authentication protocols that cannot enforce MFA?
+Authentication & Access,How often do you review user and privileged access rights?
+Authentication & Access,How quickly are leavers' accounts deprovisioned?
+Authentication & Access,How do you manage guest and external user accounts?
+Governance,Do you have a documented information security policy approved by management?
+Governance,Who is responsible for information security in your organisation?
+Governance,Are your security policies reviewed at least annually?
+Governance,Do employees acknowledge an acceptable use policy?
+Incident Response,Do you have a documented incident response plan?
+Incident Response,How are security incidents classified by severity?
+Incident Response,Do you test your incident response plan?
+Logging & Monitoring,Do you retain audit logs for your core systems?
+Logging & Monitoring,How do you detect suspicious login activity?
+Business Continuity,How often are backups performed and are they encrypted?
+Business Continuity,Do you test restoring from backups?
+Business Continuity,What are your recovery time and recovery point objectives?
+Secure Development,Is code review required before changes are merged to production branches?
+Secure Development,Do you scan source code repositories for committed secrets?
+Secure Development,How do you manage vulnerabilities in third-party dependencies?
+Secure Development,Are any source code repositories publicly accessible?
+Third Parties,How do you control third-party applications that access company data?
+Data Protection,Do you encrypt customer data at rest and in transit?
+Data Protection,Do you use customer data to train AI models?

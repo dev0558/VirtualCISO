@@ -1,0 +1,331 @@
+# Automated checks library. Each check evaluates one or more *facts* produced by a
+# connector (see packages/connectors/vciso_connectors/*.py, FACTS docstrings).
+#
+# rule:   {fact, op, value}            -> pass when true
+#         {all: [rule, ...]}            -> pass when every sub-rule passes
+# warn:   optional rule; when the pass rule fails but warn passes -> status "warning"
+# ops:    eq ne lt lte gt gte in is_true is_false
+# A missing fact (permission, licence, API not enabled) yields status "skipped".
+# controls: codes from frameworks.yaml — this list IS the check-to-control mapping.
+
+checks:
+  # ---------------- Microsoft 365 / Entra ID ----------------
+  - code: M365-MFA-01
+    name: MFA registered for all active users
+    connector: m365
+    category: Identity & Access
+    severity: critical
+    description: Every enabled member account in Entra ID has registered at least one multi-factor authentication method.
+    rule: {fact: m365.mfa_registered_pct, op: gte, value: 100}
+    warn: {fact: m365.mfa_registered_pct, op: gte, value: 95}
+    evidence_facts: [m365.users_enabled, m365.mfa_registered_pct, m365.users_without_mfa]
+    remediation: "Entra admin center > Protection > Authentication methods > Registration campaign. Require MFA for all users with a Conditional Access policy and follow up with users listed in the evidence."
+    controls: [A.8.5, A.5.17, PR.AA]
+
+  - code: M365-ADM-02
+    name: Global Administrator count restricted (2–4)
+    connector: m365
+    category: Privileged Access
+    severity: high
+    description: Microsoft recommends fewer than five Global Administrators and at least two for break-glass resilience.
+    rule: {all: [{fact: m365.global_admin_count, op: lte, value: 4}, {fact: m365.global_admin_count, op: gte, value: 2}]}
+    evidence_facts: [m365.global_admin_count, m365.global_admins]
+    remediation: "Review members of the Global Administrator role. Move day-to-day admins to least-privilege roles (User Administrator, Exchange Administrator) and keep 2 cloud-only break-glass accounts."
+    controls: [A.8.2, A.5.18, PR.AA]
+
+  - code: M365-CA-03
+    name: Conditional Access policies enabled
+    connector: m365
+    category: Identity & Access
+    severity: high
+    description: At least one Conditional Access policy is in the enabled state (not report-only).
+    rule: {fact: m365.ca_enabled_count, op: gte, value: 1}
+    evidence_facts: [m365.ca_total_count, m365.ca_enabled_count, m365.ca_report_only_count]
+    remediation: "Entra admin center > Protection > Conditional Access. Move tested report-only policies to On. Start with: require MFA for admins, require MFA for all users, block legacy authentication."
+    controls: [A.5.15, A.8.5, PR.AA]
+
+  - code: M365-LEG-04
+    name: Legacy authentication blocked
+    connector: m365
+    category: Identity & Access
+    severity: critical
+    description: Legacy protocols (IMAP, POP, SMTP AUTH, EAS basic auth) bypass MFA and must be blocked by Conditional Access or Security Defaults.
+    rule: {fact: m365.legacy_auth_blocked, op: is_true}
+    evidence_facts: [m365.legacy_auth_blocked, m365.security_defaults_enabled]
+    remediation: "Create a Conditional Access policy targeting All users, Client apps = Exchange ActiveSync clients + Other clients, Grant = Block. Exclude only break-glass accounts."
+    controls: [A.5.15, A.8.5, PR.AA]
+
+  - code: M365-GST-05
+    name: No stale guest accounts (90+ days inactive)
+    connector: m365
+    category: Identity Lifecycle
+    severity: medium
+    description: Guest (B2B) accounts with no sign-in for 90 days should be reviewed and removed.
+    rule: {fact: m365.stale_guest_count, op: eq, value: 0}
+    warn: {fact: m365.stale_guest_count, op: lte, value: 3}
+    evidence_facts: [m365.guest_count, m365.stale_guest_count, m365.stale_guests]
+    remediation: "Run an Entra ID access review for guest users, or remove guests listed in the evidence. Consider an automatic guest expiration policy."
+    controls: [A.5.16, A.5.18, ID.AM]
+
+  - code: M365-LOG-06
+    name: Directory audit logging available
+    connector: m365
+    category: Logging & Monitoring
+    severity: high
+    description: Entra ID directory audit logs are being produced and are readable for investigations.
+    rule: {fact: m365.audit_log_available, op: is_true}
+    evidence_facts: [m365.audit_log_available, m365.latest_audit_event_at]
+    remediation: "Confirm unified audit logging is on (Purview > Audit). Export Entra ID logs to a Log Analytics workspace or SIEM with at least 90 days retention."
+    controls: [A.8.15, A.8.16, DE.CM]
+
+  - code: M365-PWD-07
+    name: Passwords do not expire arbitrarily (modern policy)
+    connector: m365
+    category: Authentication
+    severity: low
+    description: NIST SP 800-63B guidance discourages periodic forced password expiry when MFA is enforced.
+    rule: {fact: m365.password_expiry_disabled, op: is_true}
+    evidence_facts: [m365.password_expiry_disabled, m365.domains_checked]
+    remediation: "Microsoft 365 admin center > Settings > Org settings > Security & privacy > Password expiration policy: set passwords to never expire, and rely on MFA + Entra Password Protection."
+    controls: [A.5.17, PR.AA]
+
+  - code: M365-RLS-08
+    name: Privileged role segregation (no user with 3+ admin roles)
+    connector: m365
+    category: Privileged Access
+    severity: medium
+    description: No single account accumulates three or more privileged directory roles.
+    rule: {fact: m365.role_concentration_violations, op: eq, value: 0}
+    evidence_facts: [m365.privileged_roles_evaluated, m365.role_concentration_violations]
+    remediation: "Split responsibilities across named admin accounts and remove redundant role assignments. Use Privileged Identity Management for just-in-time elevation where licensed."
+    controls: [A.5.18, A.8.2, PR.AA]
+
+  - code: M365-AUT-09
+    name: Phishing-resistant / app-based MFA methods enabled
+    connector: m365
+    category: Authentication
+    severity: medium
+    description: Microsoft Authenticator or FIDO2 security keys are enabled in the authentication methods policy.
+    rule: {fact: m365.strong_auth_methods_enabled, op: is_true}
+    evidence_facts: [m365.strong_auth_methods_enabled, m365.auth_methods_enabled]
+    remediation: "Entra admin center > Protection > Authentication methods > Policies: enable Microsoft Authenticator (with number matching) and FIDO2 security keys; phase out SMS for admins."
+    controls: [A.5.17, A.8.5, PR.AA]
+
+  - code: M365-DEV-10
+    name: Managed devices compliant (≥95%)
+    connector: m365
+    category: Endpoint
+    severity: medium
+    description: Intune-managed devices report a compliant state (requires Intune licensing; skipped otherwise).
+    rule: {fact: m365.device_compliance_pct, op: gte, value: 95}
+    warn: {fact: m365.device_compliance_pct, op: gte, value: 85}
+    evidence_facts: [m365.managed_device_count, m365.device_compliance_pct]
+    remediation: "Intune admin center > Devices > Compliance: review non-compliant devices, enforce disk encryption and OS minimums, and block non-compliant devices with Conditional Access."
+    controls: [A.8.9, PR.PS]
+
+  # ---------------- Google Workspace ----------------
+  - code: GWS-MFA-01
+    name: 2-Step Verification enforced for all active users
+    connector: google_workspace
+    category: Identity & Access
+    severity: critical
+    description: Every active (non-suspended) user has 2-Step Verification enforced.
+    rule: {fact: gws.two_sv_enforced_pct, op: gte, value: 100}
+    warn: {fact: gws.two_sv_enrolled_pct, op: gte, value: 100}
+    evidence_facts: [gws.active_users, gws.two_sv_enforced_pct, gws.two_sv_enrolled_pct, gws.users_without_2sv]
+    remediation: "Admin console > Security > Authentication > 2-step verification: Allow + Enforce for all organisational units. Give users a short enrolment period first."
+    controls: [A.8.5, A.5.17, PR.AA]
+
+  - code: GWS-SUP-02
+    name: Super Admin accounts limited (≤3)
+    connector: google_workspace
+    category: Privileged Access
+    severity: high
+    description: Super administrator privileges are held by no more than three accounts.
+    rule: {fact: gws.super_admin_count, op: lte, value: 3}
+    evidence_facts: [gws.super_admin_count, gws.super_admins]
+    remediation: "Admin console > Account > Admin roles > Super Admin: remove unnecessary assignees and grant narrower prebuilt roles instead."
+    controls: [A.8.2, PR.AA]
+
+  - code: GWS-INA-03
+    name: Suspended and inactive (60+ days) accounts deprovisioned
+    connector: google_workspace
+    category: Identity Lifecycle
+    severity: medium
+    description: Leavers and inactive accounts are removed rather than left suspended or dormant.
+    rule: {fact: gws.inactive_or_suspended_count, op: eq, value: 0}
+    warn: {fact: gws.inactive_or_suspended_count, op: lte, value: 2}
+    evidence_facts: [gws.suspended_count, gws.inactive_60d_count, gws.inactive_or_suspended_count, gws.inactive_accounts]
+    remediation: "Transfer data ownership and delete accounts listed in the evidence. Add a leaver step to the offboarding checklist."
+    controls: [A.5.16, A.5.18, ID.AM]
+
+  - code: GWS-ADM-04
+    name: All administrators have 2SV enrolled
+    connector: google_workspace
+    category: Privileged Access
+    severity: critical
+    description: Every account with administrator privileges is enrolled in 2-Step Verification.
+    rule: {fact: gws.admins_without_2sv, op: eq, value: 0}
+    evidence_facts: [gws.admin_count, gws.admins_without_2sv]
+    remediation: "Require security keys for admin accounts (Security > 2-step verification > Allowed methods: Only security key) for the admin OU."
+    controls: [A.8.2, A.8.5, PR.AA]
+
+  - code: GWS-ROL-05
+    name: Delegated admin role assignments limited (≤5)
+    connector: google_workspace
+    category: Privileged Access
+    severity: medium
+    description: The number of delegated (non-super) admin role assignments is kept small and reviewed.
+    rule: {fact: gws.delegated_admin_assignments, op: lte, value: 5}
+    evidence_facts: [gws.delegated_admin_assignments]
+    remediation: "Admin console > Account > Admin roles: review each custom/prebuilt role and remove assignments that are no longer required."
+    controls: [A.5.18, A.8.2, PR.AA]
+
+  - code: GWS-APP-06
+    name: No unreviewed high-risk OAuth app grants (30 days)
+    connector: google_workspace
+    category: Third-Party Access
+    severity: high
+    description: Third-party apps were not granted full Gmail or Drive scopes in the last 30 days without review.
+    rule: {fact: gws.high_risk_oauth_apps, op: eq, value: 0}
+    evidence_facts: [gws.oauth_apps_seen, gws.high_risk_oauth_apps, gws.high_risk_oauth_app_names]
+    remediation: "Admin console > Security > Access and data control > API controls > App access control: mark reviewed apps Trusted, block the rest, and restrict unconfigured third-party apps."
+    controls: [A.5.15, A.5.19, GV.SC, PR.AA]
+
+  - code: GWS-LGN-07
+    name: No suspicious login events (30 days)
+    connector: google_workspace
+    category: Logging & Monitoring
+    severity: high
+    description: Google login audit shows no suspicious-login or leaked-password events in the last 30 days.
+    rule: {fact: gws.suspicious_login_events_30d, op: eq, value: 0}
+    evidence_facts: [gws.suspicious_login_events_30d]
+    remediation: "Investigate each event in Admin console > Reporting > Audit and investigation > Login log events. Reset credentials and revoke sessions where needed."
+    controls: [A.8.16, DE.CM, DE.AE]
+
+  - code: GWS-AUD-08
+    name: Workspace audit logs accessible
+    connector: google_workspace
+    category: Logging & Monitoring
+    severity: medium
+    description: Admin and login audit logs are readable via the Reports API for investigation and retention.
+    rule: {fact: gws.audit_logs_available, op: is_true}
+    evidence_facts: [gws.audit_logs_available, gws.latest_admin_event_at]
+    remediation: "Ensure the Reports API is reachable for the service account and consider exporting logs to BigQuery or a SIEM for long-term retention."
+    controls: [A.8.15, DE.CM]
+
+  - code: GWS-NLI-09
+    name: No never-used accounts older than 30 days
+    connector: google_workspace
+    category: Identity Lifecycle
+    severity: low
+    description: Accounts created more than 30 days ago that have never signed in are reviewed and removed.
+    rule: {fact: gws.never_logged_in_count, op: eq, value: 0}
+    warn: {fact: gws.never_logged_in_count, op: lte, value: 2}
+    evidence_facts: [gws.never_logged_in_count, gws.never_logged_in_accounts]
+    remediation: "Confirm with managers whether accounts listed are still required; delete or suspend unused accounts."
+    controls: [A.5.16, ID.AM]
+
+  # ---------------- GitHub ----------------
+  - code: GH-2FA-01
+    name: Organisation requires two-factor authentication
+    connector: github
+    category: Identity & Access
+    severity: critical
+    description: The GitHub organisation enforces 2FA for all members and outside collaborators.
+    rule: {all: [{fact: gh.org_2fa_required, op: is_true}, {fact: gh.members_without_2fa, op: eq, value: 0}]}
+    evidence_facts: [gh.org_2fa_required, gh.members_without_2fa]
+    remediation: "Organisation Settings > Authentication security > Require two-factor authentication. Members without 2FA are removed, so notify them first."
+    controls: [A.8.5, A.5.17, PR.AA]
+
+  - code: GH-BRN-02
+    name: Branch protection on default branches
+    connector: github
+    category: Change Management
+    severity: high
+    description: Every active repository protects its default branch (rulesets or classic branch protection).
+    rule: {fact: gh.default_branch_protected_pct, op: gte, value: 100}
+    warn: {fact: gh.default_branch_protected_pct, op: gte, value: 80}
+    evidence_facts: [gh.active_repo_count, gh.default_branch_protected_pct, gh.unprotected_repos]
+    remediation: "Create an organisation ruleset targeting ~DEFAULT_BRANCH for all repositories: require pull requests, block force pushes and deletions."
+    controls: [A.8.9, PR.PS, RC.RP]
+
+  - code: GH-SEC-03
+    name: Secret scanning enabled on all repositories
+    connector: github
+    category: Secrets Management
+    severity: high
+    description: Secret scanning is enabled for every active repository where it is available.
+    rule: {fact: gh.secret_scanning_pct, op: gte, value: 100}
+    warn: {fact: gh.secret_scanning_pct, op: gte, value: 80}
+    evidence_facts: [gh.secret_scanning_pct, gh.push_protection_pct, gh.repos_without_secret_scanning]
+    remediation: "Organisation Settings > Code security > Configurations: apply a configuration enabling secret scanning and push protection to all repositories."
+    controls: [A.8.24, A.8.16, PR.DS]
+
+  - code: GH-CSN-04
+    name: No open critical code scanning alerts
+    connector: github
+    category: Vulnerability Management
+    severity: high
+    description: Code scanning (e.g. CodeQL) reports no open alerts of critical severity.
+    rule: {fact: gh.open_critical_code_alerts, op: eq, value: 0}
+    evidence_facts: [gh.open_critical_code_alerts, gh.open_high_code_alerts]
+    remediation: "Triage alerts in the Security tab, fix or dismiss with justification. Enable default CodeQL setup on repositories that lack it."
+    controls: [A.8.8, DE.CM]
+
+  - code: GH-PUB-05
+    name: No public repositories with sensitive names
+    connector: github
+    category: Data Exposure
+    severity: critical
+    description: No public repository name suggests internal, infrastructure or secret material.
+    rule: {fact: gh.sensitive_public_repo_count, op: eq, value: 0}
+    evidence_facts: [gh.public_repo_count, gh.sensitive_public_repo_count, gh.sensitive_public_repos]
+    remediation: "Change visibility of flagged repositories to private/internal, rotate any credentials ever committed, and restrict members from creating public repositories."
+    controls: [A.8.24, ID.AM, PR.DS]
+
+  - code: GH-DEP-06
+    name: Dependabot security updates enabled
+    connector: github
+    category: Vulnerability Management
+    severity: medium
+    description: Dependabot security updates are enabled on every active repository.
+    rule: {fact: gh.dependabot_updates_pct, op: gte, value: 100}
+    warn: {fact: gh.dependabot_updates_pct, op: gte, value: 80}
+    evidence_facts: [gh.dependabot_updates_pct, gh.repos_without_dependabot]
+    remediation: "Enable Dependabot alerts and security updates in a code security configuration applied to all repositories."
+    controls: [A.8.8, DE.CM, GV.SC]
+
+  - code: GH-ADM-07
+    name: Organisation owners limited (≤3) and base permission read
+    connector: github
+    category: Privileged Access
+    severity: medium
+    description: Few organisation owners, and members get read (or no) access by default.
+    rule: {all: [{fact: gh.owner_count, op: lte, value: 3}, {fact: gh.default_repo_permission, op: in, value: [read, none]}]}
+    evidence_facts: [gh.owner_count, gh.owners, gh.default_repo_permission]
+    remediation: "Organisation Settings > Member privileges: set Base permissions to Read or No permission. Demote owners who do not need billing/admin access."
+    controls: [A.8.2, A.5.1, GV.PO, PR.AA]
+
+  - code: GH-REV-08
+    name: Pull request review required on default branches
+    connector: github
+    category: Change Management
+    severity: medium
+    description: Protected default branches require at least one approving review.
+    rule: {fact: gh.required_review_pct, op: gte, value: 100}
+    warn: {fact: gh.required_review_pct, op: gte, value: 80}
+    evidence_facts: [gh.required_review_pct, gh.repos_without_required_review]
+    remediation: "In the default-branch ruleset require a pull request with at least 1 approval and dismiss stale approvals on new commits."
+    controls: [A.5.18, A.8.9, PR.PS]
+
+  - code: GH-COL-09
+    name: Outside collaborators limited (≤5)
+    connector: github
+    category: Third-Party Access
+    severity: low
+    description: External (outside) collaborators with repository access are few and reviewed.
+    rule: {fact: gh.outside_collaborator_count, op: lte, value: 5}
+    evidence_facts: [gh.outside_collaborator_count]
+    remediation: "Organisation > People > Outside collaborators: remove collaborators whose engagement has ended; prefer time-boxed access."
+    controls: [A.5.19, A.5.18, GV.SC]

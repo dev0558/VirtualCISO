@@ -1,0 +1,2634 @@
+{
+ "tenants": [
+  {
+   "slug": "healthbridge",
+   "org": {
+    "name": "HealthBridge Technologies",
+    "industry": "Healthcare SaaS & Telehealth",
+    "employeeCount": 52,
+    "cloudProviders": [
+     "Microsoft 365 / Entra ID",
+     "GitHub"
+    ],
+    "primaryContact": "elena.rostova@healthbridge.example",
+    "vcisoLead": "Marcus Vance, CISSP, CISA",
+    "targetFrameworks": [
+     "ISO/IEC 27001:2022",
+     "NIST CSF 2.0"
+    ]
+   },
+   "integrations": [
+    {
+     "type": "m365",
+     "account": "healthbridge.onmicrosoft.example",
+     "facts": {
+      "m365.users_enabled": 52,
+      "m365.mfa_registered_pct": 100,
+      "m365.users_without_mfa": [],
+      "m365.global_admin_count": 6,
+      "m365.global_admins": [
+       "a***@healthbridge.example",
+       "i***@healthbridge.example",
+       "e***@healthbridge.example",
+       "s***@healthbridge.example",
+       "c***@healthbridge.example",
+       "t***@healthbridge.example"
+      ],
+      "m365.ca_total_count": 5,
+      "m365.ca_enabled_count": 0,
+      "m365.ca_report_only_count": 5,
+      "m365.legacy_auth_blocked": true,
+      "m365.security_defaults_enabled": false,
+      "m365.guest_count": 14,
+      "m365.stale_guest_count": 9,
+      "m365.stale_guests": [
+       "a***@consultingfirm.example",
+       "v***@devagency.example",
+       "p***@biomed.example"
+      ],
+      "m365.audit_log_available": true,
+      "m365.latest_audit_event_at": "2026-10-31T07:58:12Z",
+      "m365.password_expiry_disabled": true,
+      "m365.domains_checked": 1,
+      "m365.privileged_roles_evaluated": 18,
+      "m365.role_concentration_violations": 0,
+      "m365.strong_auth_methods_enabled": true,
+      "m365.auth_methods_enabled": [
+       "microsoftAuthenticator",
+       "fido2"
+      ],
+      "m365.managed_device_count": 52,
+      "m365.device_compliance_pct": 98.1
+     }
+    },
+    {
+     "type": "github",
+     "account": "github.com/healthbridge-eng",
+     "facts": {
+      "gh.org_2fa_required": true,
+      "gh.members_without_2fa": 0,
+      "gh.active_repo_count": 16,
+      "gh.default_branch_protected_pct": 100,
+      "gh.unprotected_repos": [],
+      "gh.secret_scanning_pct": 100,
+      "gh.push_protection_pct": 100,
+      "gh.repos_without_secret_scanning": [],
+      "gh.open_critical_code_alerts": 0,
+      "gh.open_high_code_alerts": 1,
+      "gh.public_repo_count": 1,
+      "gh.sensitive_public_repo_count": 0,
+      "gh.sensitive_public_repos": [],
+      "gh.dependabot_updates_pct": 100,
+      "gh.repos_without_dependabot": [],
+      "gh.owner_count": 2,
+      "gh.owners": [
+       "vciso-lead",
+       "cto"
+      ],
+      "gh.default_repo_permission": "read",
+      "gh.required_review_pct": 100,
+      "gh.repos_without_required_review": [],
+      "gh.outside_collaborator_count": 4
+     }
+    }
+   ],
+   "policies": [
+    {
+     "code": "POL-01",
+     "status": "approved",
+     "version": "1.2",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Information Security Policy\n**Organization:** HealthBridge Technologies  \n**Classification:** Internal & Auditor Facing  \n**Version:** 1.2  \n**Approved by:** Elena Rostova (Chief Technology Officer)  \n**Effective Date:** October 15, 2026  \n\n---\n\n### 1. Purpose & Scope\nThis Information Security Policy establishes executive leadership's commitment to protecting the confidentiality, integrity, and availability of all electronic protected health information (ePHI), customer records, intellectual property, and computing infrastructure operated by HealthBridge Technologies. This policy applies to all full-time employees, contractors, advisors, and cloud services (Microsoft 365, GitHub, production cloud environments).\n\n### 2. Leadership Commitment & Roles\n- **Chief Technology Officer (CTO):** Holds ultimate executive accountability for technology risk and compliance posture.\n- **Virtual Chief Information Security Officer (vCISO):** Formulates security strategy, maintains the risk register, orchestrates third-party audits, and conducts quarterly reviews.\n- **All Personnel:** Mandatory completion of annual security awareness training and adherence to all topic-specific policies.\n\n### 3. Core Security Principles\n1. **Zero Trust & Least Privilege:** Default deny on all access requests. Access is granted solely based on verified business necessity.\n2. **Multi-Factor Authentication (MFA):** Mandatory across all administrative, corporate, and developer interfaces.\n3. **Data Protection by Design:** Universal AES-256 encryption at rest and TLS 1.3 in transit.\n4. **Continuous Evidence & Compliance:** Automated continuous monitoring against ISO/IEC 27001:2022 and NIST CSF 2.0 baselines.\n\n### 4. Review Cadence\nThis policy shall be formally reviewed at least annually or following significant architectural or organizational changes."
+    },
+    {
+     "code": "POL-02",
+     "status": "approved",
+     "version": "1.1",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Access Control & Identity Management Policy\n**Organization:** HealthBridge Technologies  \n**Version:** 1.1  \n**Status:** Approved  \n\n---\n\n### 1. Identity & Credential Standards\n- All corporate accounts must be anchored in Entra ID / Microsoft 365.\n- Multi-factor authentication is mandatory without exception. SMS is disallowed for privileged access; FIDO2 WebAuthn or Microsoft Authenticator number-matching is required.\n- Passwords must be at least 14 characters in length and checked against compromised credential dictionaries.\n\n### 2. Privileged Access Management\n- Permanent Global Administrator assignments must not exceed 4 accounts.\n- Administrative accounts must not be used for daily email, web browsing, or routine workstation usage.\n- Privileged elevation is monitored with alerts sent to the security channel.\n\n### 3. Access Reviews & Deprovisioning\n- Human Resources must notify IT Operations of any termination within 2 hours.\n- Access reviews of all privileged roles and external guest collaborators occur every 90 days.\n- Inactive accounts (>60 days) are automatically disabled."
+    },
+    {
+     "code": "POL-03",
+     "status": "under_review",
+     "version": "1.0",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": null,
+     "content": "# Security Incident Response Plan (S-IRP)\n**Organization:** HealthBridge Technologies  \n**Version:** 1.0 (Draft under review)  \n\n---\n\n### 1. Incident Severity Classification\n- **SEV-1 (Critical):** Confirmed compromise of production database, ransomware, or unauthorized exfiltration of customer PHI/PII. Response time < 15 minutes.\n- **SEV-2 (High):** Unauthorized administrative account access or credential leak without confirmed exfiltration. Response time < 1 hour.\n- **SEV-3 (Medium/Low):** Isolated malware on endpoint or blocked malicious phishing campaign. Response time < 4 hours.\n\n### 2. Incident Response Team (IRT)\n- Incident Commander: Virtual CISO (Marcus Vance)\n- Technical Lead: Lead DevOps & Engineering (Elena Rostova)\n- Legal & Communications: External Legal Counsel\n\n### 3. Containment & Eradication Workflow\n1. Isolate affected endpoints or revoke compromised access tokens immediately.\n2. Preserve forensic snapshots and audit logs with cryptographic SHA-256 hashes.\n3. Notify affected regulatory bodies within 72 hours if statutory thresholds are met.\n4. Conduct root-cause post-mortem within 5 business days."
+    },
+    {
+     "code": "POL-04",
+     "status": "draft",
+     "version": "1.0",
+     "author": "Elena Rostova (CTO)",
+     "approver": null,
+     "content": "# Backup & Disaster Recovery Policy\n**Organization:** HealthBridge Technologies  \n**Version:** 1.0 (Draft)  \n\n---\n\n### 1. Objectives\n- Recovery Point Objective (RPO): Maximum 1 hour data loss for production transactional databases.\n- Recovery Time Objective (RTO): Maximum 4 hours to full operational service restoration.\n\n### 2. Backup Schedules & Protection\n- Automated hourly snapshots of databases with daily differential backups.\n- Backups are stored in geographically distinct cloud regions with Object Lock (immutability) enabled.\n- Backups are encrypted with KMS-managed customer keys (AES-256).\n\n### 3. Testing Cadence\n- Quarterly automated restoration drill into staging environment.\n- Annual simulated multi-region failover drill overseen by the vCISO."
+    },
+    {
+     "code": "POL-05",
+     "status": "approved",
+     "version": "1.0",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Acceptable Use Policy (AUP)\n**Organization:** HealthBridge Technologies  \n**Version:** 1.0  \n**Status:** Approved  \n\n---\n\n### 1. Scope & Guidelines\nThis policy applies to all personnel utilizing HealthBridge computing hardware, mobile devices, SaaS applications, and network connections.\n\n### 2. Permitted & Prohibited Activities\n- **Permitted:** Work-related software development, communication, authorized customer support, and incidental personal browsing.\n- **Prohibited:**\n  - Pasting proprietary source code, credentials, or customer PHI into unauthorized external public AI chatbots.\n  - Disabling corporate antivirus, firewall, or MDM software on company-issued laptops.\n  - Installing unapproved peer-to-peer software or torrent clients.\n  - Sharing credentials or MFA push approval tokens with colleagues."
+    }
+   ],
+   "risks": [
+    {
+     "title": "Excessive Global Administrators in Microsoft 365 Tenant",
+     "category": "Privileged Access",
+     "description": "6 accounts hold permanent Global Admin privileges, exceeding the target threshold of 4. A single compromised credential could grant full tenant takeover.",
+     "likelihood": 3,
+     "impact": 5,
+     "owner": "Marcus Vance (vCISO)",
+     "treatment": "Mitigate",
+     "treatmentPlan": "Demote 3 accounts to role-based access (User Admin, Exchange Admin) and configure Privileged Identity Management (PIM) with approval workflow.",
+     "status": "In Progress",
+     "linkedControlCodes": [
+      "A.8.2",
+      "PR.AA"
+     ],
+     "linkedCheckCodes": [
+      "M365-ADM-02"
+     ]
+    },
+    {
+     "title": "Device Trust Conditional Access Policy in Report-Only Mode",
+     "category": "Access & Identity",
+     "description": "Conditional access rules requiring compliant Intune devices are currently not enforced, allowing unmanaged personal devices to access corporate email.",
+     "likelihood": 4,
+     "impact": 4,
+     "owner": "Elena Rostova (CTO)",
+     "treatment": "Mitigate",
+     "treatmentPlan": "Transition CAP-04-RequireCompliantDevice from Report-Only to Enforced mode after completing the 5 remaining contractor laptop enrollments.",
+     "status": "In Progress",
+     "linkedControlCodes": [
+      "A.5.15",
+      "PR.AA"
+     ],
+     "linkedCheckCodes": [
+      "M365-CA-03"
+     ]
+    },
+    {
+     "title": "Stale External Guest Accounts in Directory",
+     "category": "Governance & Third-Party",
+     "description": "9 external contractor and partner accounts have had zero sign-in activity in 90+ days, presenting dormant attack vectors.",
+     "likelihood": 3,
+     "impact": 3,
+     "owner": "Elena Rostova (CTO)",
+     "treatment": "Mitigate",
+     "treatmentPlan": "Execute Entra ID Access Review campaign to automatically revoke guest accounts inactive for >60 days.",
+     "status": "Open",
+     "linkedControlCodes": [
+      "A.5.16",
+      "ID.AM"
+     ],
+     "linkedCheckCodes": [
+      "M365-GST-05"
+     ]
+    },
+    {
+     "title": "Disaster Recovery Failover Drill Outstanding",
+     "category": "Operational Continuity",
+     "description": "While hourly automated database backups are functioning with object lock, a formal end-to-end multi-region failover test has not been executed this year.",
+     "likelihood": 2,
+     "impact": 4,
+     "owner": "Marcus Vance (vCISO)",
+     "treatment": "Mitigate",
+     "treatmentPlan": "Schedule simulated RDS database failover and application DNS rerouting during scheduled maintenance window.",
+     "status": "Open",
+     "linkedControlCodes": [
+      "A.8.13",
+      "RC.RP"
+     ],
+     "linkedCheckCodes": []
+    },
+    {
+     "title": "Third-Party SaaS Vendor Security Questionnaire Backlog",
+     "category": "Governance & Third-Party",
+     "description": "Customer enterprise security assessments take an average of 12 business days to complete, risking sales pipeline velocity.",
+     "likelihood": 4,
+     "impact": 3,
+     "owner": "Marcus Vance (vCISO)",
+     "treatment": "Mitigate",
+     "treatmentPlan": "Deploy AI Questionnaire Autofill powered by approved policy catalog and automated check evidence to drop turnaround to < 24 hours.",
+     "status": "In Progress",
+     "linkedControlCodes": [
+      "A.5.1",
+      "GV.PO"
+     ],
+     "linkedCheckCodes": []
+    }
+   ],
+   "tasks": [
+    {
+     "title": "Demote 3 Global Administrators & Configure PIM",
+     "description": "Reduce permanent Global Admins from 6 to 3. Assign role-specific delegated permissions (Exchange Admin, User Admin) and activate JIT elevation.",
+     "phase": "Sprint 1 (Days 1-30)",
+     "priority": "P1",
+     "owner": "Elena Rostova (CTO)",
+     "dueDate": "2026-11-10",
+     "status": "in_progress",
+     "linkedCheckCode": "M365-ADM-02"
+    },
+    {
+     "title": "Enforce Conditional Access Device Trust Policy",
+     "description": "Switch CAP-04-RequireCompliantDevice from Report-Only to Enforced mode so only Intune-compliant laptops can access tenant resources.",
+     "phase": "Sprint 1 (Days 1-30)",
+     "priority": "P1",
+     "owner": "Elena Rostova (CTO)",
+     "dueDate": "2026-11-15",
+     "status": "in_progress",
+     "linkedCheckCode": "M365-CA-03"
+    },
+    {
+     "title": "Bulk Revoke 9 Stale External Guest Accounts",
+     "description": "Run Entra ID Access Review to purge dormant guest user invitations inactive for >90 days.",
+     "phase": "Sprint 1 (Days 1-30)",
+     "priority": "P2",
+     "owner": "Elena Rostova (CTO)",
+     "dueDate": "2026-11-20",
+     "status": "todo",
+     "linkedCheckCode": "M365-GST-05"
+    },
+    {
+     "title": "Complete and Approve Incident Response Plan",
+     "description": "Finalize Version 1.0 of the Incident Response Plan, test escalation phone tree, and obtain executive sign-off.",
+     "phase": "Sprint 2 (Days 31-60)",
+     "priority": "P1",
+     "owner": "Marcus Vance (vCISO)",
+     "dueDate": "2026-12-05",
+     "status": "in_progress"
+    },
+    {
+     "title": "Execute Simulated Multi-Region DR Drill",
+     "description": "Perform scheduled database failover in staging environment and document recovery time against 4-hour RTO SLA.",
+     "phase": "Sprint 2 (Days 31-60)",
+     "priority": "P2",
+     "owner": "Elena Rostova (CTO)",
+     "dueDate": "2026-12-18",
+     "status": "todo"
+    },
+    {
+     "title": "Conduct Mock ISO 27001:2022 Stage 1 Readiness Audit",
+     "description": "Simulate auditor walkthrough with read-only access, review evidence hashes, and verify 100% control mapping coverage.",
+     "phase": "Sprint 3 (Days 61-90)",
+     "priority": "P1",
+     "owner": "Marcus Vance (vCISO)",
+     "dueDate": "2027-01-15",
+     "status": "todo"
+    },
+    {
+     "title": "Automate Quarterly Access Review Workflows",
+     "description": "Implement recurring quarterly entitlement reviews for all engineering roles and database access groups.",
+     "phase": "Sprint 3 (Days 61-90)",
+     "priority": "P3",
+     "owner": "Elena Rostova (CTO)",
+     "dueDate": "2027-01-28",
+     "status": "todo"
+    }
+   ],
+   "milestones": [
+    {
+     "title": "ISMS Scope & Risk Methodology Baseline",
+     "category": "policy_governance",
+     "targetDate": "2026-09-15",
+     "completedDate": "2026-09-15",
+     "status": "completed",
+     "description": "Formal definition of ISMS boundary across all digital health cloud environments, databases, and remote personnel.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "ISO 27001 Clause 4.3 & 6.1",
+     "deliverables": [
+      "Statement of Applicability (SoA) v0.8",
+      "Risk Assessment Methodology doc"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "Cloud Connectors & Evidence Collection Engine",
+     "category": "technical_verification",
+     "targetDate": "2026-10-01",
+     "completedDate": "2026-10-01",
+     "status": "completed",
+     "description": "Integration of Microsoft 365, Entra ID, and GitHub Enterprise read-only API connectors with automated SHA-256 evidence hashing.",
+     "owner": "Elena Rostova (CTO)",
+     "frameworkRef": "ISO 27001 A.8.15 / NIST DE.CM",
+     "deliverables": [
+      "28 Automated Checks Configured",
+      "Immutable Evidence Store Initialized"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "Core Governance Policies Executive Sign-Off",
+     "category": "policy_governance",
+     "targetDate": "2026-10-20",
+     "completedDate": "2026-10-20",
+     "status": "completed",
+     "description": "Approval of Information Security, Access Control, Acceptable Use, and Backup & Disaster Recovery policies by executive management.",
+     "owner": "Elena Rostova (CTO)",
+     "frameworkRef": "ISO 27001 Clause 5.2 / NIST GV.PO",
+     "deliverables": [
+      "POL-01, POL-02, POL-04, POL-05 Approved",
+      "Employee Acknowledgment Campaign"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "Sprint 1 Remediation: Admin Demotion & Conditional Access",
+     "category": "technical_verification",
+     "targetDate": "2026-11-15",
+     "status": "in_progress",
+     "description": "Reduce Global Administrators in Entra ID from 6 to 3, deploy PIM just-in-time workflows, and enforce device-compliance conditional access.",
+     "owner": "Elena Rostova (CTO)",
+     "frameworkRef": "ISO 27001 A.8.2 & A.5.15 / NIST PR.AA",
+     "deliverables": [
+      "Demotion of 3 Global Admins",
+      "CAP-04 Switched to Enforce Mode"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "Annual Disaster Recovery Failover Simulation Drill",
+     "category": "internal_milestone",
+     "targetDate": "2026-12-18",
+     "status": "upcoming",
+     "description": "Simulated cross-region database restore and DNS failover test to validate 1-hour RPO and 4-hour RTO compliance.",
+     "owner": "Elena Rostova (CTO)",
+     "frameworkRef": "ISO 27001 A.8.13 / NIST RC.RP",
+     "deliverables": [
+      "DR Exercise Post-Mortem Report",
+      "RTO/RPO Timing Verification Logs"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "Internal ISMS Pre-Audit & Management Review Meeting",
+     "category": "internal_milestone",
+     "targetDate": "2027-01-10",
+     "status": "upcoming",
+     "description": "Independent internal audit review of all 93 Annex A controls and mandatory executive management review per ISO 27001 Clause 9.3.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "ISO 27001 Clause 9.2 & 9.3",
+     "deliverables": [
+      "Internal Audit Non-Conformity Log",
+      "Management Review Minutes & Sign-Off"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "External ISO/IEC 27001:2022 Stage 1 Readiness Audit",
+     "category": "audit_deadline",
+     "targetDate": "2027-01-28",
+     "status": "upcoming",
+     "description": "Formal Stage 1 desktop audit by external accredited registrar. Review of documentation, ISMS scope, risk register, and policy governance.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "External Audit Stage 1",
+     "deliverables": [
+      "Auditor-Ready Evidence Package",
+      "Stage 1 Auditor Report"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Northbridge Certification (fictional registrar)"
+    },
+    {
+     "title": "Stage 1 Observation & Corrective Action Window",
+     "category": "internal_milestone",
+     "targetDate": "2027-02-25",
+     "status": "upcoming",
+     "description": "Closeout of any Areas for Concern (AFCs) or documentation updates identified by the Stage 1 external auditor prior to Stage 2.",
+     "owner": "Elena Rostova (CTO)",
+     "frameworkRef": "Audit Finding Resolution",
+     "deliverables": [
+      "Corrective Action Plan (CAP)",
+      "Updated Evidence Dossier"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "External ISO/IEC 27001:2022 Stage 2 Formal Certification Audit",
+     "category": "audit_deadline",
+     "targetDate": "2027-03-20",
+     "status": "upcoming",
+     "description": "3-day comprehensive audit of operational effectiveness, technical checks, live interviews with personnel, and evidence verification.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "Official Certification Stage 2",
+     "deliverables": [
+      "Formal Certificate of Registration",
+      "Zero Major Non-Conformities Report"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Northbridge Certification (fictional registrar)"
+    },
+    {
+     "title": "Annual CREST Penetration Testing & Vendor Due Diligence",
+     "category": "audit_deadline",
+     "targetDate": "2027-05-15",
+     "status": "upcoming",
+     "description": "Independent blackbox and greybox network and web application penetration test performed by CREST-certified testing firm.",
+     "owner": "Elena Rostova (CTO)",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST DE.CM",
+     "deliverables": [
+      "Attestation of Penetration Testing",
+      "Remediation Verification Letter"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Ironclad Security Labs (fictional)"
+    }
+   ],
+   "calendar": [
+    {
+     "title": "ISO/IEC 27001:2022 Stage 1 Readiness Audit",
+     "category": "audit",
+     "date": "2026-11-18",
+     "time": "09:00 AM EST",
+     "duration": "Full Day (8 hrs)",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO & Engagement Lead",
+     "frameworkRef": "ISO/IEC 27001:2022 Stage 1 (Clauses 4-10 & Annex A)",
+     "recurrence": "Annual",
+     "status": "urgent",
+     "description": "Accredited registrar documentation and scope verification audit. Formal review of ISMS governance, scope document, Statement of Applicability (SoA), and risk treatment plans.",
+     "deliverables": [
+      "Approved ISMS Scope Document & Statement of Applicability (SoA v2.1)",
+      "Management Review Minutes & Internal Audit Findings Report",
+      "Cryptographic Evidence Dossier for Annex A Automated Checks"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Executive Sponsor",
+      "Compliance Officer",
+      "Lead DevOps Architect"
+     ],
+     "auditorBody": "Northbridge Certification (fictional registrar)"
+    },
+    {
+     "title": "Cloud Infrastructure Penetration Testing & External Technical Audit",
+     "category": "audit",
+     "date": "2026-11-26",
+     "time": "10:00 AM EST",
+     "duration": "3 Days",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Head of Security Engineering",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST CSF 2.0 PR.IP-12 / SOC 2 CC7.1",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Third-party white-box and grey-box network penetration test of multi-tenant AWS/Azure infrastructure, API gateway endpoints, and Entra ID tenant configurations.",
+     "deliverables": [
+      "Scope Confirmation of Production API Endpoints",
+      "Rules of Engagement (RoE) Document Signed",
+      "Automated Vulnerability Scan Diff Report"
+     ],
+     "mandatoryForRoles": [
+      "Lead Cloud Architect",
+      "SecOps Engineer"
+     ],
+     "auditorBody": "Redline Offensive Security (fictional)"
+    },
+    {
+     "title": "Q4 2026 NIST CSF 2.0 Governance Review & Maturity Audit",
+     "category": "audit",
+     "date": "2026-12-12",
+     "time": "02:00 PM EST",
+     "duration": "4 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "NIST CSF 2.0 (GV, ID, PR, DE, RS, RC Functions)",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Quarterly internal governance audit evaluating the six NIST CSF 2.0 functions with primary emphasis on the new Govern (GV) category, supply chain risk management, and risk appetite alignment.",
+     "deliverables": [
+      "NIST CSF 2.0 Category Maturity Scorecard",
+      "Evidence Ledger Sample for Protect (PR) & Respond (RS)",
+      "Quarterly Executive Risk Register Presentation"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Client Admin",
+      "Engineering Lead"
+     ],
+     "auditorBody": "Internal vCISO Audit Committee"
+    },
+    {
+     "title": "Annual Third-Party Vendor Security & SOC 2 Report Review",
+     "category": "audit",
+     "date": "2026-12-22",
+     "time": "11:00 AM EST",
+     "duration": "3 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Primary Client Contact",
+     "frameworkRef": "ISO 27001 A.5.19, A.5.20 / NIST CSF 2.0 GV.SC-06",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of SOC 2 Type II reports, ISO certificates, and penetration testing summaries for critical sub-processors (AWS, Datadog, Sendgrid, Auth0, GitHub Enterprise).",
+     "deliverables": [
+      "Vendor Risk Assessment Matrix v4",
+      "Bridge Letters / Attestations for Expired Periods",
+      "Security Exception Approvals"
+     ],
+     "mandatoryForRoles": [
+      "Legal Counsel",
+      "Procurement",
+      "CTO"
+     ],
+     "auditorBody": "HealthBridge Vendor Risk Committee"
+    },
+    {
+     "title": "ISO/IEC 27001:2022 Stage 2 Final Certification Audit",
+     "category": "audit",
+     "date": "2027-01-14",
+     "time": "08:30 AM EST",
+     "duration": "2 Days",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO/IEC 27001:2022 Stage 2 Comprehensive On-Site/Remote Audit",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Formal accredited certification body audit evaluating live operational controls, incident response records, continuous automated checks, and personnel compliance interviews.",
+     "deliverables": [
+      "Zero Open Major Non-Conformances",
+      "Complete Automated Verification Logs for 93 Annex A Controls",
+      "Formal Recommendation for Accredited Certification"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Client Admin",
+      "CTO",
+      "All Sampled System Owners"
+     ],
+     "auditorBody": "Northbridge Certification lead auditors"
+    },
+    {
+     "title": "Q1 2027 SOC 2 Type II Surveillance & Observation Kickoff",
+     "category": "audit",
+     "date": "2027-02-02",
+     "time": "01:00 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "AICPA SOC 2 (Security, Availability, Confidentiality)",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Kickoff meeting with CPA auditor to define population sampling dates, key evidence submission schedules, and automated API evidence sync procedures for the 6-month observation window.",
+     "deliverables": [
+      "Agreed System Description & Control Matrix",
+      "Evidence Request List (PBC List) Integration"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Compliance Officer"
+     ],
+     "auditorBody": "Harborview Audit Partners (fictional)"
+    },
+    {
+     "title": "POL-01: Information Security Policy Annual Recertification",
+     "category": "policy_review",
+     "date": "2026-11-06",
+     "time": "11:00 AM EST",
+     "duration": "1.5 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "ISO 27001 A.5.1 / NIST CSF 2.0 GV.PO-01",
+     "recurrence": "Annual",
+     "status": "urgent",
+     "description": "Mandatory annual executive review and signature of master Information Security Policy, updating AI usage guidelines, remote work standards, and executive approval chains.",
+     "deliverables": [
+      "POL-01 Revision v2.0 Clean & Redlined Copy",
+      "Board of Directors / CEO Sign-off Memorandum",
+      "Employee Distribution & Acknowledgment Plan"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Executive Leadership",
+      "CEO"
+     ],
+     "policyCode": "POL-01"
+    },
+    {
+     "title": "POL-02: Access Control & MFA Enforcement Policy Semi-Annual Review",
+     "category": "policy_review",
+     "date": "2026-11-20",
+     "time": "03:00 PM EST",
+     "duration": "1 hr",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Head of SecOps",
+     "frameworkRef": "ISO 27001 A.5.15, A.5.16 / NIST CSF 2.0 PR.AA-01, PR.AA-03",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Semi-annual policy calibration verifying strict FIDO2/WebAuthn phishing-resistant MFA thresholds, Just-In-Time (JIT) privileged access windows, and break-glass account governance.",
+     "deliverables": [
+      "Entra ID & Google Workspace Conditional Access Policy Diff",
+      "Privileged Role Assignment Audit Sheet (<4 Global Admins)"
+     ],
+     "mandatoryForRoles": [
+      "Identity Admin",
+      "CTO",
+      "vCISO"
+     ],
+     "policyCode": "POL-02"
+    },
+    {
+     "title": "POL-03: Incident Response Plan (IRP) & Tabletop Protocol Review",
+     "category": "policy_review",
+     "date": "2026-12-04",
+     "time": "01:30 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "ISO 27001 A.5.24 - A.5.28 / NIST CSF 2.0 RS.MA, RS.CO",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Quarterly update of incident classification severities (SEV-1 to SEV-4), external breach notification timelines (HIPAA 60-day, GDPR 72-hour), and escalation rosters.",
+     "deliverables": [
+      "Updated Emergency Contact Roster & Forensic Retainer SLAs",
+      "Ransomware & Cloud Compromise Playbook Revisions",
+      "Executive Briefing Summary"
+     ],
+     "mandatoryForRoles": [
+      "Incident Commander",
+      "Legal Counsel",
+      "PR Lead",
+      "vCISO"
+     ],
+     "policyCode": "POL-03"
+    },
+    {
+     "title": "POL-04: Cryptography & Key Management Policy Recertification",
+     "category": "policy_review",
+     "date": "2026-12-18",
+     "time": "02:00 PM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.8.24 / NIST CSF 2.0 PR.DS-01, PR.DS-02",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of cryptographic algorithms, TLS 1.3 enforcement mandates, KMS envelope encryption standards, and AWS KMS / Azure Key Vault key rotation intervals.",
+     "deliverables": [
+      "Approved Cipher Suite Standard v2.0",
+      "Automated KMS Key Rotation Audit Log",
+      "Deprecation Notice for TLS 1.1 / 1.0 Residual Endpoints"
+     ],
+     "mandatoryForRoles": [
+      "Infrastructure Lead",
+      "Security Architect"
+     ],
+     "policyCode": "POL-04"
+    },
+    {
+     "title": "POL-05: Vulnerability Management & Patching SLA Policy Review",
+     "category": "policy_review",
+     "date": "2027-01-08",
+     "time": "10:00 AM EST",
+     "duration": "1 hr",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST CSF 2.0 ID.RA-01, PR.IP-12",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Review of SLAs for critical (14-day) and high (30-day) patch cycles across container images, serverless functions, and third-party dependency scanning.",
+     "deliverables": [
+      "SLA Compliance Metrics for Q4 2026",
+      "Dependabot / Snyk Rule Thresholds"
+     ],
+     "mandatoryForRoles": [
+      "DevOps Lead",
+      "Engineering Managers"
+     ],
+     "policyCode": "POL-05"
+    },
+    {
+     "title": "POL-06: Business Continuity & Disaster Recovery (BCDR) Policy Review",
+     "category": "policy_review",
+     "date": "2027-01-22",
+     "time": "02:00 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.29, A.5.30 / NIST CSF 2.0 RC.RP-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Annual calibration of Recovery Time Objectives (RTO < 4 hrs) and Recovery Point Objectives (RPO < 15 mins), multi-region database failover, and cold backup integrity verification.",
+     "deliverables": [
+      "BCDR Policy Document v2.3 Signed",
+      "Q3 Database Restore Verification Test Log"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Cloud Operations Lead",
+      "CTO"
+     ],
+     "policyCode": "POL-06"
+    },
+    {
+     "title": "POL-07: Third-Party & Supply Chain Risk Management Policy Review",
+     "category": "policy_review",
+     "date": "2027-02-06",
+     "time": "11:00 AM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Legal Liaison",
+     "frameworkRef": "ISO 27001 A.5.19 - A.5.22 / NIST CSF 2.0 GV.SC-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of vendor onboarding security criteria, sub-processor data processing addenda (DPA), and right-to-audit clauses across SaaS dependencies.",
+     "deliverables": [
+      "Updated Vendor Security Assessment Questionnaire",
+      "Critical Vendor Tiering Matrix 2027"
+     ],
+     "mandatoryForRoles": [
+      "Procurement",
+      "Legal",
+      "vCISO"
+     ],
+     "policyCode": "POL-07"
+    },
+    {
+     "title": "Q4 Mandatory Company-Wide Phishing Simulation & Awareness Cutoff",
+     "category": "training",
+     "date": "2026-11-14",
+     "time": "11:59 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "HR & People Operations",
+     "ownerRole": "Security Awareness Coordinator",
+     "frameworkRef": "ISO 27001 A.6.3 / NIST CSF 2.0 PR.AT-01",
+     "recurrence": "Quarterly",
+     "status": "urgent",
+     "description": "Mandatory quarterly awareness training and simulated spear-phishing click test. Employees who fail must complete micro-learning within 48 hours to maintain email network access.",
+     "deliverables": [
+      "100% Training Completion Report across 52 Employees",
+      "Phishing Simulation Failure & Retraining Statistics (<3% click rate target)",
+      "Escalation List for Non-Compliant Users"
+     ],
+     "mandatoryForRoles": [
+      "All Full-time Employees",
+      "Contractors",
+      "Executives"
+     ]
+    },
+    {
+     "title": "DevOps & Engineering OWASP Top 10 Secure Coding Recertification",
+     "category": "training",
+     "date": "2026-11-28",
+     "time": "05:00 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Engineering Manager",
+     "frameworkRef": "ISO 27001 A.8.28 / NIST CSF 2.0 PR.AT-02 / SOC 2 CC7.2",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Interactive secure development training covering OWASP Top 10 (Injection, Broken Object Level Auth, Server-Side Request Forgery, Insecure Cryptography) and secret management in CI/CD.",
+     "deliverables": [
+      "Engineering Staff Completion Certificates",
+      "Hands-on Lab Exercise Scorecards",
+      "GitHub Branch Protection Policy Verification"
+     ],
+     "mandatoryForRoles": [
+      "Software Engineers",
+      "DevOps Engineers",
+      "QA Engineers",
+      "Tech Leads"
+     ]
+    },
+    {
+     "title": "HIPAA ePHI Security & Healthcare Privacy Annual Recertification",
+     "category": "training",
+     "date": "2026-12-15",
+     "time": "11:59 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Compliance Officer & vCISO",
+     "frameworkRef": "HIPAA Security Rule 45 CFR \u00a7 164.308(a)(5) / NIST CSF 2.0 PR.AT-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Annual regulatory training covering protected health information (ePHI) handling, minimum necessary rule, patient rights under HIPAA, and immediate breach notification protocols.",
+     "deliverables": [
+      "Individual Attestation Signatures",
+      "Regulatory Training Record Ledger for HHS/OCR Audit Defense"
+     ],
+     "mandatoryForRoles": [
+      "All Customer-Facing Staff",
+      "Engineering Team",
+      "Support Engineers",
+      "Management"
+     ]
+    },
+    {
+     "title": "Executive & Board Social Engineering & BEC Defense Briefing",
+     "category": "training",
+     "date": "2026-12-29",
+     "time": "04:00 PM EST",
+     "duration": "1 hr Interactive Session",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.4, A.6.3 / NIST CSF 2.0 GV.RR-01, PR.AT-01",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Targeted executive protection briefing covering Business Email Compromise (BEC), CEO impersonation vectors, AI voice deepfake wire fraud defenses, and multi-signature authorization protocols.",
+     "deliverables": [
+      "Executive Defense Playbook Handout",
+      "Wire Transfer Out-of-Band Verification Policy Signed"
+     ],
+     "mandatoryForRoles": [
+      "CEO",
+      "CFO",
+      "CTO",
+      "Finance Controllers",
+      "Board Members"
+     ]
+    },
+    {
+     "title": "Incident Commander Tabletop Response Drill & Triage Protocol",
+     "category": "training",
+     "date": "2027-01-19",
+     "time": "02:00 PM EST",
+     "duration": "3 hrs Simulation Exercise",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.24 / NIST CSF 2.0 RS.MA-02, RS.CO-03",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Live simulated ransomware and database exfiltration tabletop exercise testing the incident command team, forensic snapshot capture, external counsel coordination, and customer breach notice.",
+     "deliverables": [
+      "Tabletop Exercise After-Action Report (AAR)",
+      "Identified Incident Response Gaps & Action Items Log"
+     ],
+     "mandatoryForRoles": [
+      "Primary Incident Commander",
+      "Secondary Incident Commander",
+      "Legal Counsel",
+      "PR Lead"
+     ]
+    },
+    {
+     "title": "Quarterly Privileged Access & Root Credential Rotation Briefing",
+     "category": "training",
+     "date": "2027-02-12",
+     "time": "01:00 PM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.5.18 / NIST CSF 2.0 PR.AA-05",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Review of emergency break-glass procedures, SSH certificate authority rotation, and Cloud IAM root credential vaulting practices for all cloud infrastructure custodians.",
+     "deliverables": [
+      "Privileged User Access Recertification Sign-off",
+      "Vaulted Emergency Key Rotation Audit Trail"
+     ],
+     "mandatoryForRoles": [
+      "Cloud Administrators",
+      "DevOps Leads",
+      "Database Administrators"
+     ]
+    },
+    {
+     "title": "Q3 2026 Company-Wide Phishing Resilience Exercise",
+     "category": "training",
+     "date": "2026-10-15",
+     "time": "Completed",
+     "duration": "Cutoff Closed",
+     "owner": "HR & People Operations",
+     "ownerRole": "Awareness Coordinator",
+     "frameworkRef": "ISO 27001 A.6.3 / NIST PR.AT-01",
+     "recurrence": "Quarterly",
+     "status": "completed",
+     "description": "Q3 phishing drill completed with 98.1% pass rate and zero credential submissions across all 52 active staff.",
+     "deliverables": [
+      "Q3 Awareness Completion Ledger",
+      "Follow-up Microlearning Roster"
+     ],
+     "mandatoryForRoles": [
+      "All Corporate Staff"
+     ]
+    },
+    {
+     "title": "POL-08: Remote Work & Mobile Device Management (MDM) Policy Review",
+     "category": "policy_review",
+     "date": "2026-10-22",
+     "time": "Completed",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.6.7, A.8.1 / NIST PR.AC",
+     "recurrence": "Annual",
+     "status": "completed",
+     "description": "Approved mandatory BitLocker / FileVault disk encryption and Intune / Workspace device compliance requirement.",
+     "deliverables": [
+      "POL-08 Version 1.2 Signed",
+      "MDM Enrollment Audit Record"
+     ],
+     "policyCode": "POL-08"
+    },
+    {
+     "title": "Q3 2026 Pre-Audit Surveillance Review with vCISO",
+     "category": "audit",
+     "date": "2026-10-28",
+     "time": "Completed",
+     "duration": "3 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "vCISO Lead",
+     "frameworkRef": "ISO 27001 / NIST CSF 2.0",
+     "recurrence": "Quarterly",
+     "status": "completed",
+     "description": "Executive gap analysis session verifying automated check coverage ahead of Stage 1 external registrar scheduling.",
+     "deliverables": [
+      "Stage 1 Readiness Assessment Document",
+      "Corrective Action Plan for Failing Checks"
+     ],
+     "auditorBody": "vCISO Advisory Practice"
+    }
+   ],
+   "questionnaire": {
+    "title": "Enterprise Vendor Security Questionnaire",
+    "customer": "Acme Health Systems (fictional prospect)",
+    "items": [
+     {
+      "category": "Authentication & Access",
+      "question": "Does your organization enforce Multi-Factor Authentication (MFA) for all administrative and user logins?"
+     },
+     {
+      "category": "Data Protection & Encryption",
+      "question": "What cryptographic encryption standards are utilized to protect customer data at rest and in transit?"
+     },
+     {
+      "category": "Privileged Access",
+      "question": "How many individuals have permanent super-administrator or global administrator access to production systems?"
+     },
+     {
+      "category": "Software Development & Repositories",
+      "question": "Are code changes subjected to peer review and automated security scanning prior to production deployment?"
+     },
+     {
+      "category": "Incident Response & Breach Notification",
+      "question": "What is your procedure and SLA for notifying clients in the event of a confirmed security incident or data breach?"
+     },
+     {
+      "category": "Vulnerability Management",
+      "question": "How frequently are dependencies and software vulnerabilities scanned and remediated?"
+     },
+     {
+      "category": "Identity Lifecycle",
+      "question": "Describe your procedure for offboarding employees and revoking access credentials upon termination."
+     },
+     {
+      "category": "Logging & Monitoring",
+      "question": "Are system and administrator activities logged, and where are audit logs retained?"
+     },
+     {
+      "category": "Business Continuity & Disaster Recovery",
+      "question": "What are your stated Recovery Point Objective (RPO) and Recovery Time Objective (RTO)?"
+     },
+     {
+      "category": "Governance & Security Leadership",
+      "question": "Does your organization have a designated Chief Information Security Officer (CISO) or dedicated security lead?"
+     },
+     {
+      "category": "Device Management",
+      "question": "Are company-managed workstations enrolled in an endpoint management solution with mandatory full-disk encryption?"
+     },
+     {
+      "category": "Data Protection & Encryption",
+      "question": "Are database and storage encryption keys managed by the vendor or customer-managed with rotation?"
+     },
+     {
+      "category": "Physical & Environmental Security",
+      "question": "Do you operate on-premise physical data centers, or are workloads hosted in certified public cloud facilities?"
+     },
+     {
+      "category": "Third-Party Risk",
+      "question": "How do you evaluate and monitor the security posture of third-party SaaS vendors and sub-processors?"
+     },
+     {
+      "category": "Employee Security Training",
+      "question": "Do employees undergo mandatory background checks and security awareness training?"
+     },
+     {
+      "category": "Access Control",
+      "question": "Are legacy protocols such as POP, IMAP, and Basic Authentication disabled?"
+     },
+     {
+      "category": "Software Development & Repositories",
+      "question": "How does your organization prevent secrets (API keys, passwords) from being checked into source repositories?"
+     },
+     {
+      "category": "Authentication & Access",
+      "question": "Is device trust or device health verified before allowing access to internal corporate tools?"
+     },
+     {
+      "category": "Vulnerability Management",
+      "question": "Does your organization conduct independent third-party penetration testing on an annual basis?"
+     },
+     {
+      "category": "Governance & Security Leadership",
+      "question": "Which cybersecurity frameworks is your organization currently aligned with or certified against?"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "datapulse",
+   "org": {
+    "name": "DataPulse Analytics AI",
+    "industry": "Enterprise Data Platform",
+    "employeeCount": 118,
+    "cloudProviders": [
+     "Google Workspace",
+     "GitHub"
+    ],
+    "primaryContact": "karan.sharma@datapulse.example",
+    "vcisoLead": "Marcus Vance, CISSP, CISA",
+    "targetFrameworks": [
+     "ISO/IEC 27001:2022",
+     "NIST CSF 2.0"
+    ]
+   },
+   "integrations": [
+    {
+     "type": "google_workspace",
+     "account": "datapulse.example",
+     "facts": {
+      "gws.active_users": 118,
+      "gws.two_sv_enforced_pct": 100,
+      "gws.two_sv_enrolled_pct": 100,
+      "gws.users_without_2sv": [],
+      "gws.super_admin_count": 2,
+      "gws.super_admins": [
+       "s***@datapulse.example",
+       "a***@datapulse.example"
+      ],
+      "gws.suspended_count": 2,
+      "gws.inactive_60d_count": 2,
+      "gws.inactive_or_suspended_count": 4,
+      "gws.inactive_accounts": [
+       "f***@datapulse.example",
+       "c***@datapulse.example",
+       "i***@datapulse.example",
+       "q***@datapulse.example"
+      ],
+      "gws.admin_count": 5,
+      "gws.admins_without_2sv": 0,
+      "gws.delegated_admin_assignments": 3,
+      "gws.oauth_apps_seen": 32,
+      "gws.high_risk_oauth_apps": 5,
+      "gws.high_risk_oauth_app_names": [
+       "MailMerge Pro",
+       "DriveSync Lite",
+       "PDF Toolkit Online",
+       "CRM Bridge",
+       "NoteGrabber"
+      ],
+      "gws.suspicious_login_events_30d": 0,
+      "gws.audit_logs_available": true,
+      "gws.latest_admin_event_at": "2026-10-31T08:00:00Z",
+      "gws.never_logged_in_count": 0,
+      "gws.never_logged_in_accounts": []
+     }
+    },
+    {
+     "type": "github",
+     "account": "github.com/datapulse-eng",
+     "facts": {
+      "gh.org_2fa_required": true,
+      "gh.members_without_2fa": 0,
+      "gh.active_repo_count": 16,
+      "gh.default_branch_protected_pct": 100,
+      "gh.unprotected_repos": [],
+      "gh.secret_scanning_pct": 100,
+      "gh.push_protection_pct": 100,
+      "gh.repos_without_secret_scanning": [],
+      "gh.open_critical_code_alerts": 0,
+      "gh.open_high_code_alerts": 1,
+      "gh.public_repo_count": 1,
+      "gh.sensitive_public_repo_count": 0,
+      "gh.sensitive_public_repos": [],
+      "gh.dependabot_updates_pct": 81.3,
+      "gh.repos_without_dependabot": [
+       "etl-legacy",
+       "notebooks",
+       "ml-sandbox"
+      ],
+      "gh.owner_count": 2,
+      "gh.owners": [
+       "vciso-lead",
+       "cto"
+      ],
+      "gh.default_repo_permission": "read",
+      "gh.required_review_pct": 100,
+      "gh.repos_without_required_review": [],
+      "gh.outside_collaborator_count": 4
+     }
+    }
+   ],
+   "policies": [
+    {
+     "code": "POL-01",
+     "status": "approved",
+     "version": "1.2",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Information Security Policy\n**Organization:** DataPulse Analytics AI  \n**Classification:** Internal & Auditor Facing  \n**Version:** 1.2  \n**Approved by:** Elena Rostova (Chief Technology Officer)  \n**Effective Date:** October 15, 2026  \n\n---\n\n### 1. Purpose & Scope\nThis Information Security Policy establishes executive leadership's commitment to protecting the confidentiality, integrity, and availability of all electronic protected health information (ePHI), customer records, intellectual property, and computing infrastructure operated by DataPulse Analytics AI. This policy applies to all full-time employees, contractors, advisors, and cloud services (Microsoft 365, GitHub, production cloud environments).\n\n### 2. Leadership Commitment & Roles\n- **Chief Technology Officer (CTO):** Holds ultimate executive accountability for technology risk and compliance posture.\n- **Virtual Chief Information Security Officer (vCISO):** Formulates security strategy, maintains the risk register, orchestrates third-party audits, and conducts quarterly reviews.\n- **All Personnel:** Mandatory completion of annual security awareness training and adherence to all topic-specific policies.\n\n### 3. Core Security Principles\n1. **Zero Trust & Least Privilege:** Default deny on all access requests. Access is granted solely based on verified business necessity.\n2. **Multi-Factor Authentication (MFA):** Mandatory across all administrative, corporate, and developer interfaces.\n3. **Data Protection by Design:** Universal AES-256 encryption at rest and TLS 1.3 in transit.\n4. **Continuous Evidence & Compliance:** Automated continuous monitoring against ISO/IEC 27001:2022 and NIST CSF 2.0 baselines.\n\n### 4. Review Cadence\nThis policy shall be formally reviewed at least annually or following significant architectural or organizational changes."
+    },
+    {
+     "code": "POL-02",
+     "status": "approved",
+     "version": "1.1",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Access Control & Identity Management Policy\n**Organization:** DataPulse Analytics AI  \n**Version:** 1.1  \n**Status:** Approved  \n\n---\n\n### 1. Identity & Credential Standards\n- All corporate accounts must be anchored in Entra ID / Microsoft 365.\n- Multi-factor authentication is mandatory without exception. SMS is disallowed for privileged access; FIDO2 WebAuthn or Microsoft Authenticator number-matching is required.\n- Passwords must be at least 14 characters in length and checked against compromised credential dictionaries.\n\n### 2. Privileged Access Management\n- Permanent Global Administrator assignments must not exceed 4 accounts.\n- Administrative accounts must not be used for daily email, web browsing, or routine workstation usage.\n- Privileged elevation is monitored with alerts sent to the security channel.\n\n### 3. Access Reviews & Deprovisioning\n- Human Resources must notify IT Operations of any termination within 2 hours.\n- Access reviews of all privileged roles and external guest collaborators occur every 90 days.\n- Inactive accounts (>60 days) are automatically disabled."
+    },
+    {
+     "code": "POL-03",
+     "status": "under_review",
+     "version": "1.0",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": null,
+     "content": "# Security Incident Response Plan (S-IRP)\n**Organization:** DataPulse Analytics AI  \n**Version:** 1.0 (Draft under review)  \n\n---\n\n### 1. Incident Severity Classification\n- **SEV-1 (Critical):** Confirmed compromise of production database, ransomware, or unauthorized exfiltration of customer PHI/PII. Response time < 15 minutes.\n- **SEV-2 (High):** Unauthorized administrative account access or credential leak without confirmed exfiltration. Response time < 1 hour.\n- **SEV-3 (Medium/Low):** Isolated malware on endpoint or blocked malicious phishing campaign. Response time < 4 hours.\n\n### 2. Incident Response Team (IRT)\n- Incident Commander: Virtual CISO (Marcus Vance)\n- Technical Lead: Lead DevOps & Engineering (Elena Rostova)\n- Legal & Communications: External Legal Counsel\n\n### 3. Containment & Eradication Workflow\n1. Isolate affected endpoints or revoke compromised access tokens immediately.\n2. Preserve forensic snapshots and audit logs with cryptographic SHA-256 hashes.\n3. Notify affected regulatory bodies within 72 hours if statutory thresholds are met.\n4. Conduct root-cause post-mortem within 5 business days."
+    },
+    {
+     "code": "POL-04",
+     "status": "draft",
+     "version": "1.0",
+     "author": "Elena Rostova (CTO)",
+     "approver": null,
+     "content": "# Backup & Disaster Recovery Policy\n**Organization:** DataPulse Analytics AI  \n**Version:** 1.0 (Draft)  \n\n---\n\n### 1. Objectives\n- Recovery Point Objective (RPO): Maximum 1 hour data loss for production transactional databases.\n- Recovery Time Objective (RTO): Maximum 4 hours to full operational service restoration.\n\n### 2. Backup Schedules & Protection\n- Automated hourly snapshots of databases with daily differential backups.\n- Backups are stored in geographically distinct cloud regions with Object Lock (immutability) enabled.\n- Backups are encrypted with KMS-managed customer keys (AES-256).\n\n### 3. Testing Cadence\n- Quarterly automated restoration drill into staging environment.\n- Annual simulated multi-region failover drill overseen by the vCISO."
+    },
+    {
+     "code": "POL-05",
+     "status": "approved",
+     "version": "1.0",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Acceptable Use Policy (AUP)\n**Organization:** DataPulse Analytics AI  \n**Version:** 1.0  \n**Status:** Approved  \n\n---\n\n### 1. Scope & Guidelines\nThis policy applies to all personnel utilizing DataPulse computing hardware, mobile devices, SaaS applications, and network connections.\n\n### 2. Permitted & Prohibited Activities\n- **Permitted:** Work-related software development, communication, authorized customer support, and incidental personal browsing.\n- **Prohibited:**\n  - Pasting proprietary source code, credentials, or customer PHI into unauthorized external public AI chatbots.\n  - Disabling corporate antivirus, firewall, or MDM software on company-issued laptops.\n  - Installing unapproved peer-to-peer software or torrent clients.\n  - Sharing credentials or MFA push approval tokens with colleagues."
+    }
+   ],
+   "risks": [],
+   "tasks": [],
+   "milestones": [
+    {
+     "title": "Google Workspace & GitHub Security Baseline",
+     "category": "technical_verification",
+     "targetDate": "2026-10-10",
+     "completedDate": "2026-10-10",
+     "status": "completed",
+     "description": "Enforce 2SV on 118 Google Workspace accounts and GitHub organization-wide mandatory two-factor.",
+     "owner": "Karan Sharma (SecOps)",
+     "frameworkRef": "ISO 27001 A.8.5",
+     "deliverables": [
+      "100% 2SV Enforced Report",
+      "GitHub Org Policy Check"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "OAuth API Whitelist & Suspended Accounts Purge",
+     "category": "technical_verification",
+     "targetDate": "2026-11-20",
+     "status": "in_progress",
+     "description": "Block 5 unreviewed high-risk OAuth apps and permanently delete 4 stale suspended accounts exceeding 60 days.",
+     "owner": "Karan Sharma (SecOps)",
+     "frameworkRef": "ISO 27001 A.5.15 / NIST PR.AA",
+     "deliverables": [
+      "Clean Google Admin Token Audit",
+      "Deprovisioning Certificate"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "External ISO 27001:2022 Stage 1 Readiness Audit",
+     "category": "audit_deadline",
+     "targetDate": "2027-02-15",
+     "status": "upcoming",
+     "description": "Documentation and scope readiness evaluation by accredited registrar for enterprise data platform.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "ISO 27001 Stage 1",
+     "deliverables": [
+      "Stage 1 Desktop Audit Report"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Harborview Audit Partners (fictional)"
+    },
+    {
+     "title": "External ISO 27001:2022 Stage 2 Certification Audit",
+     "category": "audit_deadline",
+     "targetDate": "2027-04-10",
+     "status": "upcoming",
+     "description": "Comprehensive operational testing of data platform controls and encryption keys.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "ISO 27001 Certification",
+     "deliverables": [
+      "ISO/IEC 27001:2022 Accredited Certificate"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Harborview Audit Partners (fictional)"
+    }
+   ],
+   "calendar": [
+    {
+     "title": "ISO/IEC 27001:2022 Stage 1 Readiness Audit",
+     "category": "audit",
+     "date": "2026-11-18",
+     "time": "09:00 AM EST",
+     "duration": "Full Day (8 hrs)",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO & Engagement Lead",
+     "frameworkRef": "ISO/IEC 27001:2022 Stage 1 (Clauses 4-10 & Annex A)",
+     "recurrence": "Annual",
+     "status": "urgent",
+     "description": "Accredited registrar documentation and scope verification audit. Formal review of ISMS governance, scope document, Statement of Applicability (SoA), and risk treatment plans.",
+     "deliverables": [
+      "Approved ISMS Scope Document & Statement of Applicability (SoA v2.1)",
+      "Management Review Minutes & Internal Audit Findings Report",
+      "Cryptographic Evidence Dossier for Annex A Automated Checks"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Executive Sponsor",
+      "Compliance Officer",
+      "Lead DevOps Architect"
+     ],
+     "auditorBody": "Northbridge Certification (fictional registrar)"
+    },
+    {
+     "title": "Cloud Infrastructure Penetration Testing & External Technical Audit",
+     "category": "audit",
+     "date": "2026-11-26",
+     "time": "10:00 AM EST",
+     "duration": "3 Days",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Head of Security Engineering",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST CSF 2.0 PR.IP-12 / SOC 2 CC7.1",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Third-party white-box and grey-box network penetration test of multi-tenant AWS/Azure infrastructure, API gateway endpoints, and Entra ID tenant configurations.",
+     "deliverables": [
+      "Scope Confirmation of Production API Endpoints",
+      "Rules of Engagement (RoE) Document Signed",
+      "Automated Vulnerability Scan Diff Report"
+     ],
+     "mandatoryForRoles": [
+      "Lead Cloud Architect",
+      "SecOps Engineer"
+     ],
+     "auditorBody": "Redline Offensive Security (fictional)"
+    },
+    {
+     "title": "Q4 2026 NIST CSF 2.0 Governance Review & Maturity Audit",
+     "category": "audit",
+     "date": "2026-12-12",
+     "time": "02:00 PM EST",
+     "duration": "4 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "NIST CSF 2.0 (GV, ID, PR, DE, RS, RC Functions)",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Quarterly internal governance audit evaluating the six NIST CSF 2.0 functions with primary emphasis on the new Govern (GV) category, supply chain risk management, and risk appetite alignment.",
+     "deliverables": [
+      "NIST CSF 2.0 Category Maturity Scorecard",
+      "Evidence Ledger Sample for Protect (PR) & Respond (RS)",
+      "Quarterly Executive Risk Register Presentation"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Client Admin",
+      "Engineering Lead"
+     ],
+     "auditorBody": "Internal vCISO Audit Committee"
+    },
+    {
+     "title": "Annual Third-Party Vendor Security & SOC 2 Report Review",
+     "category": "audit",
+     "date": "2026-12-22",
+     "time": "11:00 AM EST",
+     "duration": "3 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Primary Client Contact",
+     "frameworkRef": "ISO 27001 A.5.19, A.5.20 / NIST CSF 2.0 GV.SC-06",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of SOC 2 Type II reports, ISO certificates, and penetration testing summaries for critical sub-processors (AWS, Datadog, Sendgrid, Auth0, GitHub Enterprise).",
+     "deliverables": [
+      "Vendor Risk Assessment Matrix v4",
+      "Bridge Letters / Attestations for Expired Periods",
+      "Security Exception Approvals"
+     ],
+     "mandatoryForRoles": [
+      "Legal Counsel",
+      "Procurement",
+      "CTO"
+     ],
+     "auditorBody": "DataPulse Vendor Risk Committee"
+    },
+    {
+     "title": "ISO/IEC 27001:2022 Stage 2 Final Certification Audit",
+     "category": "audit",
+     "date": "2027-01-14",
+     "time": "08:30 AM EST",
+     "duration": "2 Days",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO/IEC 27001:2022 Stage 2 Comprehensive On-Site/Remote Audit",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Formal accredited certification body audit evaluating live operational controls, incident response records, continuous automated checks, and personnel compliance interviews.",
+     "deliverables": [
+      "Zero Open Major Non-Conformances",
+      "Complete Automated Verification Logs for 93 Annex A Controls",
+      "Formal Recommendation for Accredited Certification"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Client Admin",
+      "CTO",
+      "All Sampled System Owners"
+     ],
+     "auditorBody": "Northbridge Certification lead auditors"
+    },
+    {
+     "title": "Q1 2027 SOC 2 Type II Surveillance & Observation Kickoff",
+     "category": "audit",
+     "date": "2027-02-02",
+     "time": "01:00 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "AICPA SOC 2 (Security, Availability, Confidentiality)",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Kickoff meeting with CPA auditor to define population sampling dates, key evidence submission schedules, and automated API evidence sync procedures for the 6-month observation window.",
+     "deliverables": [
+      "Agreed System Description & Control Matrix",
+      "Evidence Request List (PBC List) Integration"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Compliance Officer"
+     ],
+     "auditorBody": "Harborview Audit Partners (fictional)"
+    },
+    {
+     "title": "POL-01: Information Security Policy Annual Recertification",
+     "category": "policy_review",
+     "date": "2026-11-06",
+     "time": "11:00 AM EST",
+     "duration": "1.5 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "ISO 27001 A.5.1 / NIST CSF 2.0 GV.PO-01",
+     "recurrence": "Annual",
+     "status": "urgent",
+     "description": "Mandatory annual executive review and signature of master Information Security Policy, updating AI usage guidelines, remote work standards, and executive approval chains.",
+     "deliverables": [
+      "POL-01 Revision v2.0 Clean & Redlined Copy",
+      "Board of Directors / CEO Sign-off Memorandum",
+      "Employee Distribution & Acknowledgment Plan"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Executive Leadership",
+      "CEO"
+     ],
+     "policyCode": "POL-01"
+    },
+    {
+     "title": "POL-02: Access Control & MFA Enforcement Policy Semi-Annual Review",
+     "category": "policy_review",
+     "date": "2026-11-20",
+     "time": "03:00 PM EST",
+     "duration": "1 hr",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Head of SecOps",
+     "frameworkRef": "ISO 27001 A.5.15, A.5.16 / NIST CSF 2.0 PR.AA-01, PR.AA-03",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Semi-annual policy calibration verifying strict FIDO2/WebAuthn phishing-resistant MFA thresholds, Just-In-Time (JIT) privileged access windows, and break-glass account governance.",
+     "deliverables": [
+      "Entra ID & Google Workspace Conditional Access Policy Diff",
+      "Privileged Role Assignment Audit Sheet (<4 Global Admins)"
+     ],
+     "mandatoryForRoles": [
+      "Identity Admin",
+      "CTO",
+      "vCISO"
+     ],
+     "policyCode": "POL-02"
+    },
+    {
+     "title": "POL-03: Incident Response Plan (IRP) & Tabletop Protocol Review",
+     "category": "policy_review",
+     "date": "2026-12-04",
+     "time": "01:30 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "ISO 27001 A.5.24 - A.5.28 / NIST CSF 2.0 RS.MA, RS.CO",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Quarterly update of incident classification severities (SEV-1 to SEV-4), external breach notification timelines (HIPAA 60-day, GDPR 72-hour), and escalation rosters.",
+     "deliverables": [
+      "Updated Emergency Contact Roster & Forensic Retainer SLAs",
+      "Ransomware & Cloud Compromise Playbook Revisions",
+      "Executive Briefing Summary"
+     ],
+     "mandatoryForRoles": [
+      "Incident Commander",
+      "Legal Counsel",
+      "PR Lead",
+      "vCISO"
+     ],
+     "policyCode": "POL-03"
+    },
+    {
+     "title": "POL-04: Cryptography & Key Management Policy Recertification",
+     "category": "policy_review",
+     "date": "2026-12-18",
+     "time": "02:00 PM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.8.24 / NIST CSF 2.0 PR.DS-01, PR.DS-02",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of cryptographic algorithms, TLS 1.3 enforcement mandates, KMS envelope encryption standards, and AWS KMS / Azure Key Vault key rotation intervals.",
+     "deliverables": [
+      "Approved Cipher Suite Standard v2.0",
+      "Automated KMS Key Rotation Audit Log",
+      "Deprecation Notice for TLS 1.1 / 1.0 Residual Endpoints"
+     ],
+     "mandatoryForRoles": [
+      "Infrastructure Lead",
+      "Security Architect"
+     ],
+     "policyCode": "POL-04"
+    },
+    {
+     "title": "POL-05: Vulnerability Management & Patching SLA Policy Review",
+     "category": "policy_review",
+     "date": "2027-01-08",
+     "time": "10:00 AM EST",
+     "duration": "1 hr",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST CSF 2.0 ID.RA-01, PR.IP-12",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Review of SLAs for critical (14-day) and high (30-day) patch cycles across container images, serverless functions, and third-party dependency scanning.",
+     "deliverables": [
+      "SLA Compliance Metrics for Q4 2026",
+      "Dependabot / Snyk Rule Thresholds"
+     ],
+     "mandatoryForRoles": [
+      "DevOps Lead",
+      "Engineering Managers"
+     ],
+     "policyCode": "POL-05"
+    },
+    {
+     "title": "POL-06: Business Continuity & Disaster Recovery (BCDR) Policy Review",
+     "category": "policy_review",
+     "date": "2027-01-22",
+     "time": "02:00 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.29, A.5.30 / NIST CSF 2.0 RC.RP-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Annual calibration of Recovery Time Objectives (RTO < 4 hrs) and Recovery Point Objectives (RPO < 15 mins), multi-region database failover, and cold backup integrity verification.",
+     "deliverables": [
+      "BCDR Policy Document v2.3 Signed",
+      "Q3 Database Restore Verification Test Log"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Cloud Operations Lead",
+      "CTO"
+     ],
+     "policyCode": "POL-06"
+    },
+    {
+     "title": "POL-07: Third-Party & Supply Chain Risk Management Policy Review",
+     "category": "policy_review",
+     "date": "2027-02-06",
+     "time": "11:00 AM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Legal Liaison",
+     "frameworkRef": "ISO 27001 A.5.19 - A.5.22 / NIST CSF 2.0 GV.SC-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of vendor onboarding security criteria, sub-processor data processing addenda (DPA), and right-to-audit clauses across SaaS dependencies.",
+     "deliverables": [
+      "Updated Vendor Security Assessment Questionnaire",
+      "Critical Vendor Tiering Matrix 2027"
+     ],
+     "mandatoryForRoles": [
+      "Procurement",
+      "Legal",
+      "vCISO"
+     ],
+     "policyCode": "POL-07"
+    },
+    {
+     "title": "Q4 Mandatory Company-Wide Phishing Simulation & Awareness Cutoff",
+     "category": "training",
+     "date": "2026-11-14",
+     "time": "11:59 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "HR & People Operations",
+     "ownerRole": "Security Awareness Coordinator",
+     "frameworkRef": "ISO 27001 A.6.3 / NIST CSF 2.0 PR.AT-01",
+     "recurrence": "Quarterly",
+     "status": "urgent",
+     "description": "Mandatory quarterly awareness training and simulated spear-phishing click test. Employees who fail must complete micro-learning within 48 hours to maintain email network access.",
+     "deliverables": [
+      "100% Training Completion Report across 52 Employees",
+      "Phishing Simulation Failure & Retraining Statistics (<3% click rate target)",
+      "Escalation List for Non-Compliant Users"
+     ],
+     "mandatoryForRoles": [
+      "All Full-time Employees",
+      "Contractors",
+      "Executives"
+     ]
+    },
+    {
+     "title": "DevOps & Engineering OWASP Top 10 Secure Coding Recertification",
+     "category": "training",
+     "date": "2026-11-28",
+     "time": "05:00 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Engineering Manager",
+     "frameworkRef": "ISO 27001 A.8.28 / NIST CSF 2.0 PR.AT-02 / SOC 2 CC7.2",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Interactive secure development training covering OWASP Top 10 (Injection, Broken Object Level Auth, Server-Side Request Forgery, Insecure Cryptography) and secret management in CI/CD.",
+     "deliverables": [
+      "Engineering Staff Completion Certificates",
+      "Hands-on Lab Exercise Scorecards",
+      "GitHub Branch Protection Policy Verification"
+     ],
+     "mandatoryForRoles": [
+      "Software Engineers",
+      "DevOps Engineers",
+      "QA Engineers",
+      "Tech Leads"
+     ]
+    },
+    {
+     "title": "HIPAA ePHI Security & Healthcare Privacy Annual Recertification",
+     "category": "training",
+     "date": "2026-12-15",
+     "time": "11:59 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Compliance Officer & vCISO",
+     "frameworkRef": "HIPAA Security Rule 45 CFR \u00a7 164.308(a)(5) / NIST CSF 2.0 PR.AT-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Annual regulatory training covering protected health information (ePHI) handling, minimum necessary rule, patient rights under HIPAA, and immediate breach notification protocols.",
+     "deliverables": [
+      "Individual Attestation Signatures",
+      "Regulatory Training Record Ledger for HHS/OCR Audit Defense"
+     ],
+     "mandatoryForRoles": [
+      "All Customer-Facing Staff",
+      "Engineering Team",
+      "Support Engineers",
+      "Management"
+     ]
+    },
+    {
+     "title": "Executive & Board Social Engineering & BEC Defense Briefing",
+     "category": "training",
+     "date": "2026-12-29",
+     "time": "04:00 PM EST",
+     "duration": "1 hr Interactive Session",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.4, A.6.3 / NIST CSF 2.0 GV.RR-01, PR.AT-01",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Targeted executive protection briefing covering Business Email Compromise (BEC), CEO impersonation vectors, AI voice deepfake wire fraud defenses, and multi-signature authorization protocols.",
+     "deliverables": [
+      "Executive Defense Playbook Handout",
+      "Wire Transfer Out-of-Band Verification Policy Signed"
+     ],
+     "mandatoryForRoles": [
+      "CEO",
+      "CFO",
+      "CTO",
+      "Finance Controllers",
+      "Board Members"
+     ]
+    },
+    {
+     "title": "Incident Commander Tabletop Response Drill & Triage Protocol",
+     "category": "training",
+     "date": "2027-01-19",
+     "time": "02:00 PM EST",
+     "duration": "3 hrs Simulation Exercise",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.24 / NIST CSF 2.0 RS.MA-02, RS.CO-03",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Live simulated ransomware and database exfiltration tabletop exercise testing the incident command team, forensic snapshot capture, external counsel coordination, and customer breach notice.",
+     "deliverables": [
+      "Tabletop Exercise After-Action Report (AAR)",
+      "Identified Incident Response Gaps & Action Items Log"
+     ],
+     "mandatoryForRoles": [
+      "Primary Incident Commander",
+      "Secondary Incident Commander",
+      "Legal Counsel",
+      "PR Lead"
+     ]
+    },
+    {
+     "title": "Quarterly Privileged Access & Root Credential Rotation Briefing",
+     "category": "training",
+     "date": "2027-02-12",
+     "time": "01:00 PM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.5.18 / NIST CSF 2.0 PR.AA-05",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Review of emergency break-glass procedures, SSH certificate authority rotation, and Cloud IAM root credential vaulting practices for all cloud infrastructure custodians.",
+     "deliverables": [
+      "Privileged User Access Recertification Sign-off",
+      "Vaulted Emergency Key Rotation Audit Trail"
+     ],
+     "mandatoryForRoles": [
+      "Cloud Administrators",
+      "DevOps Leads",
+      "Database Administrators"
+     ]
+    },
+    {
+     "title": "Q3 2026 Company-Wide Phishing Resilience Exercise",
+     "category": "training",
+     "date": "2026-10-15",
+     "time": "Completed",
+     "duration": "Cutoff Closed",
+     "owner": "HR & People Operations",
+     "ownerRole": "Awareness Coordinator",
+     "frameworkRef": "ISO 27001 A.6.3 / NIST PR.AT-01",
+     "recurrence": "Quarterly",
+     "status": "completed",
+     "description": "Q3 phishing drill completed with 98.1% pass rate and zero credential submissions across all 52 active staff.",
+     "deliverables": [
+      "Q3 Awareness Completion Ledger",
+      "Follow-up Microlearning Roster"
+     ],
+     "mandatoryForRoles": [
+      "All Corporate Staff"
+     ]
+    },
+    {
+     "title": "POL-08: Remote Work & Mobile Device Management (MDM) Policy Review",
+     "category": "policy_review",
+     "date": "2026-10-22",
+     "time": "Completed",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.6.7, A.8.1 / NIST PR.AC",
+     "recurrence": "Annual",
+     "status": "completed",
+     "description": "Approved mandatory BitLocker / FileVault disk encryption and Intune / Workspace device compliance requirement.",
+     "deliverables": [
+      "POL-08 Version 1.2 Signed",
+      "MDM Enrollment Audit Record"
+     ],
+     "policyCode": "POL-08"
+    },
+    {
+     "title": "Q3 2026 Pre-Audit Surveillance Review with vCISO",
+     "category": "audit",
+     "date": "2026-10-28",
+     "time": "Completed",
+     "duration": "3 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "vCISO Lead",
+     "frameworkRef": "ISO 27001 / NIST CSF 2.0",
+     "recurrence": "Quarterly",
+     "status": "completed",
+     "description": "Executive gap analysis session verifying automated check coverage ahead of Stage 1 external registrar scheduling.",
+     "deliverables": [
+      "Stage 1 Readiness Assessment Document",
+      "Corrective Action Plan for Failing Checks"
+     ],
+     "auditorBody": "vCISO Advisory Practice"
+    }
+   ],
+   "questionnaire": {
+    "title": "Enterprise Vendor Security Questionnaire",
+    "customer": "Acme Health Systems (fictional prospect)",
+    "items": [
+     {
+      "category": "Authentication & Access",
+      "question": "Does your organization enforce Multi-Factor Authentication (MFA) for all administrative and user logins?"
+     },
+     {
+      "category": "Data Protection & Encryption",
+      "question": "What cryptographic encryption standards are utilized to protect customer data at rest and in transit?"
+     },
+     {
+      "category": "Privileged Access",
+      "question": "How many individuals have permanent super-administrator or global administrator access to production systems?"
+     },
+     {
+      "category": "Software Development & Repositories",
+      "question": "Are code changes subjected to peer review and automated security scanning prior to production deployment?"
+     },
+     {
+      "category": "Incident Response & Breach Notification",
+      "question": "What is your procedure and SLA for notifying clients in the event of a confirmed security incident or data breach?"
+     },
+     {
+      "category": "Vulnerability Management",
+      "question": "How frequently are dependencies and software vulnerabilities scanned and remediated?"
+     },
+     {
+      "category": "Identity Lifecycle",
+      "question": "Describe your procedure for offboarding employees and revoking access credentials upon termination."
+     },
+     {
+      "category": "Logging & Monitoring",
+      "question": "Are system and administrator activities logged, and where are audit logs retained?"
+     },
+     {
+      "category": "Business Continuity & Disaster Recovery",
+      "question": "What are your stated Recovery Point Objective (RPO) and Recovery Time Objective (RTO)?"
+     },
+     {
+      "category": "Governance & Security Leadership",
+      "question": "Does your organization have a designated Chief Information Security Officer (CISO) or dedicated security lead?"
+     },
+     {
+      "category": "Device Management",
+      "question": "Are company-managed workstations enrolled in an endpoint management solution with mandatory full-disk encryption?"
+     },
+     {
+      "category": "Data Protection & Encryption",
+      "question": "Are database and storage encryption keys managed by the vendor or customer-managed with rotation?"
+     },
+     {
+      "category": "Physical & Environmental Security",
+      "question": "Do you operate on-premise physical data centers, or are workloads hosted in certified public cloud facilities?"
+     },
+     {
+      "category": "Third-Party Risk",
+      "question": "How do you evaluate and monitor the security posture of third-party SaaS vendors and sub-processors?"
+     },
+     {
+      "category": "Employee Security Training",
+      "question": "Do employees undergo mandatory background checks and security awareness training?"
+     },
+     {
+      "category": "Access Control",
+      "question": "Are legacy protocols such as POP, IMAP, and Basic Authentication disabled?"
+     },
+     {
+      "category": "Software Development & Repositories",
+      "question": "How does your organization prevent secrets (API keys, passwords) from being checked into source repositories?"
+     },
+     {
+      "category": "Authentication & Access",
+      "question": "Is device trust or device health verified before allowing access to internal corporate tools?"
+     },
+     {
+      "category": "Vulnerability Management",
+      "question": "Does your organization conduct independent third-party penetration testing on an annual basis?"
+     },
+     {
+      "category": "Governance & Security Leadership",
+      "question": "Which cybersecurity frameworks is your organization currently aligned with or certified against?"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "finvault",
+   "org": {
+    "name": "FinVault Payments",
+    "industry": "Financial Technology / API Banking",
+    "employeeCount": 34,
+    "cloudProviders": [
+     "Microsoft 365 / Entra ID",
+     "Google Workspace",
+     "GitHub"
+    ],
+    "primaryContact": "sarah.jenkins@finvault.example",
+    "vcisoLead": "Marcus Vance, CISSP, CISA",
+    "targetFrameworks": [
+     "ISO/IEC 27001:2022",
+     "NIST CSF 2.0"
+    ]
+   },
+   "integrations": [
+    {
+     "type": "m365",
+     "account": "finvault.onmicrosoft.example",
+     "facts": {
+      "m365.users_enabled": 34,
+      "m365.mfa_registered_pct": 97.1,
+      "m365.users_without_mfa": [
+       "k***@finvault.example"
+      ],
+      "m365.global_admin_count": 3,
+      "m365.global_admins": [
+       "a***@finvault.example",
+       "i***@finvault.example",
+       "b***@finvault.example"
+      ],
+      "m365.ca_total_count": 5,
+      "m365.ca_enabled_count": 4,
+      "m365.ca_report_only_count": 1,
+      "m365.legacy_auth_blocked": false,
+      "m365.security_defaults_enabled": false,
+      "m365.guest_count": 6,
+      "m365.stale_guest_count": 0,
+      "m365.stale_guests": [],
+      "m365.audit_log_available": true,
+      "m365.latest_audit_event_at": "2026-10-31T07:58:12Z",
+      "m365.password_expiry_disabled": true,
+      "m365.domains_checked": 1,
+      "m365.privileged_roles_evaluated": 18,
+      "m365.role_concentration_violations": 0,
+      "m365.strong_auth_methods_enabled": true,
+      "m365.auth_methods_enabled": [
+       "microsoftAuthenticator",
+       "fido2"
+      ],
+      "m365.managed_device_count": 52,
+      "m365.device_compliance_pct": 98.1
+     }
+    },
+    {
+     "type": "google_workspace",
+     "account": "finvault.example",
+     "facts": {
+      "gws.active_users": 34,
+      "gws.two_sv_enforced_pct": 91.2,
+      "gws.two_sv_enrolled_pct": 100,
+      "gws.users_without_2sv": [],
+      "gws.super_admin_count": 2,
+      "gws.super_admins": [
+       "s***@finvault.example",
+       "a***@finvault.example"
+      ],
+      "gws.suspended_count": 0,
+      "gws.inactive_60d_count": 0,
+      "gws.inactive_or_suspended_count": 0,
+      "gws.inactive_accounts": [],
+      "gws.admin_count": 5,
+      "gws.admins_without_2sv": 0,
+      "gws.delegated_admin_assignments": 3,
+      "gws.oauth_apps_seen": 27,
+      "gws.high_risk_oauth_apps": 0,
+      "gws.high_risk_oauth_app_names": [],
+      "gws.suspicious_login_events_30d": 0,
+      "gws.audit_logs_available": true,
+      "gws.latest_admin_event_at": "2026-10-31T08:00:00Z",
+      "gws.never_logged_in_count": 0,
+      "gws.never_logged_in_accounts": []
+     }
+    },
+    {
+     "type": "github",
+     "account": "github.com/finvault-eng",
+     "facts": {
+      "gh.org_2fa_required": true,
+      "gh.members_without_2fa": 0,
+      "gh.active_repo_count": 12,
+      "gh.default_branch_protected_pct": 83.3,
+      "gh.unprotected_repos": [
+       "sandbox-api",
+       "infra-scripts"
+      ],
+      "gh.secret_scanning_pct": 100,
+      "gh.push_protection_pct": 100,
+      "gh.repos_without_secret_scanning": [],
+      "gh.open_critical_code_alerts": 0,
+      "gh.open_high_code_alerts": 1,
+      "gh.public_repo_count": 2,
+      "gh.sensitive_public_repo_count": 1,
+      "gh.sensitive_public_repos": [
+       "finvault-infra-terraform"
+      ],
+      "gh.dependabot_updates_pct": 100,
+      "gh.repos_without_dependabot": [],
+      "gh.owner_count": 2,
+      "gh.owners": [
+       "vciso-lead",
+       "cto"
+      ],
+      "gh.default_repo_permission": "read",
+      "gh.required_review_pct": 100,
+      "gh.repos_without_required_review": [],
+      "gh.outside_collaborator_count": 4
+     }
+    }
+   ],
+   "policies": [
+    {
+     "code": "POL-01",
+     "status": "approved",
+     "version": "1.2",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Information Security Policy\n**Organization:** FinVault Payments  \n**Classification:** Internal & Auditor Facing  \n**Version:** 1.2  \n**Approved by:** Elena Rostova (Chief Technology Officer)  \n**Effective Date:** October 15, 2026  \n\n---\n\n### 1. Purpose & Scope\nThis Information Security Policy establishes executive leadership's commitment to protecting the confidentiality, integrity, and availability of all electronic protected health information (ePHI), customer records, intellectual property, and computing infrastructure operated by FinVault Payments. This policy applies to all full-time employees, contractors, advisors, and cloud services (Microsoft 365, GitHub, production cloud environments).\n\n### 2. Leadership Commitment & Roles\n- **Chief Technology Officer (CTO):** Holds ultimate executive accountability for technology risk and compliance posture.\n- **Virtual Chief Information Security Officer (vCISO):** Formulates security strategy, maintains the risk register, orchestrates third-party audits, and conducts quarterly reviews.\n- **All Personnel:** Mandatory completion of annual security awareness training and adherence to all topic-specific policies.\n\n### 3. Core Security Principles\n1. **Zero Trust & Least Privilege:** Default deny on all access requests. Access is granted solely based on verified business necessity.\n2. **Multi-Factor Authentication (MFA):** Mandatory across all administrative, corporate, and developer interfaces.\n3. **Data Protection by Design:** Universal AES-256 encryption at rest and TLS 1.3 in transit.\n4. **Continuous Evidence & Compliance:** Automated continuous monitoring against ISO/IEC 27001:2022 and NIST CSF 2.0 baselines.\n\n### 4. Review Cadence\nThis policy shall be formally reviewed at least annually or following significant architectural or organizational changes."
+    },
+    {
+     "code": "POL-02",
+     "status": "approved",
+     "version": "1.1",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Access Control & Identity Management Policy\n**Organization:** FinVault Payments  \n**Version:** 1.1  \n**Status:** Approved  \n\n---\n\n### 1. Identity & Credential Standards\n- All corporate accounts must be anchored in Entra ID / Microsoft 365.\n- Multi-factor authentication is mandatory without exception. SMS is disallowed for privileged access; FIDO2 WebAuthn or Microsoft Authenticator number-matching is required.\n- Passwords must be at least 14 characters in length and checked against compromised credential dictionaries.\n\n### 2. Privileged Access Management\n- Permanent Global Administrator assignments must not exceed 4 accounts.\n- Administrative accounts must not be used for daily email, web browsing, or routine workstation usage.\n- Privileged elevation is monitored with alerts sent to the security channel.\n\n### 3. Access Reviews & Deprovisioning\n- Human Resources must notify IT Operations of any termination within 2 hours.\n- Access reviews of all privileged roles and external guest collaborators occur every 90 days.\n- Inactive accounts (>60 days) are automatically disabled."
+    },
+    {
+     "code": "POL-03",
+     "status": "under_review",
+     "version": "1.0",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": null,
+     "content": "# Security Incident Response Plan (S-IRP)\n**Organization:** FinVault Payments  \n**Version:** 1.0 (Draft under review)  \n\n---\n\n### 1. Incident Severity Classification\n- **SEV-1 (Critical):** Confirmed compromise of production database, ransomware, or unauthorized exfiltration of customer PHI/PII. Response time < 15 minutes.\n- **SEV-2 (High):** Unauthorized administrative account access or credential leak without confirmed exfiltration. Response time < 1 hour.\n- **SEV-3 (Medium/Low):** Isolated malware on endpoint or blocked malicious phishing campaign. Response time < 4 hours.\n\n### 2. Incident Response Team (IRT)\n- Incident Commander: Virtual CISO (Marcus Vance)\n- Technical Lead: Lead DevOps & Engineering (Elena Rostova)\n- Legal & Communications: External Legal Counsel\n\n### 3. Containment & Eradication Workflow\n1. Isolate affected endpoints or revoke compromised access tokens immediately.\n2. Preserve forensic snapshots and audit logs with cryptographic SHA-256 hashes.\n3. Notify affected regulatory bodies within 72 hours if statutory thresholds are met.\n4. Conduct root-cause post-mortem within 5 business days."
+    },
+    {
+     "code": "POL-04",
+     "status": "draft",
+     "version": "1.0",
+     "author": "Elena Rostova (CTO)",
+     "approver": null,
+     "content": "# Backup & Disaster Recovery Policy\n**Organization:** FinVault Payments  \n**Version:** 1.0 (Draft)  \n\n---\n\n### 1. Objectives\n- Recovery Point Objective (RPO): Maximum 1 hour data loss for production transactional databases.\n- Recovery Time Objective (RTO): Maximum 4 hours to full operational service restoration.\n\n### 2. Backup Schedules & Protection\n- Automated hourly snapshots of databases with daily differential backups.\n- Backups are stored in geographically distinct cloud regions with Object Lock (immutability) enabled.\n- Backups are encrypted with KMS-managed customer keys (AES-256).\n\n### 3. Testing Cadence\n- Quarterly automated restoration drill into staging environment.\n- Annual simulated multi-region failover drill overseen by the vCISO."
+    },
+    {
+     "code": "POL-05",
+     "status": "approved",
+     "version": "1.0",
+     "author": "Marcus Vance, CISSP (vCISO)",
+     "approver": "Elena Rostova (CTO)",
+     "content": "# Acceptable Use Policy (AUP)\n**Organization:** FinVault Payments  \n**Version:** 1.0  \n**Status:** Approved  \n\n---\n\n### 1. Scope & Guidelines\nThis policy applies to all personnel utilizing FinVault computing hardware, mobile devices, SaaS applications, and network connections.\n\n### 2. Permitted & Prohibited Activities\n- **Permitted:** Work-related software development, communication, authorized customer support, and incidental personal browsing.\n- **Prohibited:**\n  - Pasting proprietary source code, credentials, or customer PHI into unauthorized external public AI chatbots.\n  - Disabling corporate antivirus, firewall, or MDM software on company-issued laptops.\n  - Installing unapproved peer-to-peer software or torrent clients.\n  - Sharing credentials or MFA push approval tokens with colleagues."
+    }
+   ],
+   "risks": [],
+   "tasks": [],
+   "milestones": [
+    {
+     "title": "Payment Data Encryption & Key Management Audit",
+     "category": "technical_verification",
+     "targetDate": "2026-10-18",
+     "completedDate": "2026-10-18",
+     "status": "completed",
+     "description": "Verification of KMS hardware security module (HSM) customer keys and TLS 1.3 endpoints.",
+     "owner": "Sarah Jenkins (VP Eng)",
+     "frameworkRef": "ISO 27001 A.8.24 / NIST PR.DS",
+     "deliverables": [
+      "Key Hierarchy Architecture Diagram",
+      "Cryptographic Proof Hash"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "Multi-Tenant Cloud Boundary Separation Review",
+     "category": "internal_milestone",
+     "targetDate": "2026-11-28",
+     "status": "in_progress",
+     "description": "Row-level security audit and cross-tenant isolation testing across API banking endpoints.",
+     "owner": "Sarah Jenkins (VP Eng)",
+     "frameworkRef": "ISO 27001 A.8.9",
+     "deliverables": [
+      "Cross-Tenant Pen Test Report"
+     ],
+     "isAuditDeadline": false
+    },
+    {
+     "title": "ISO 27001 & SOC 2 Dual Stage 1 Assessment",
+     "category": "audit_deadline",
+     "targetDate": "2027-01-18",
+     "status": "upcoming",
+     "description": "Integrated Stage 1 assessment combining ISO 27001:2022 documentation with SOC 2 Trust Services Criteria.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "Dual Framework Stage 1",
+     "deliverables": [
+      "Stage 1 Readiness Memorandum"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Meridian Assurance (fictional auditor)"
+    },
+    {
+     "title": "ISO 27001 & SOC 2 Dual Stage 2 Final Audit",
+     "category": "audit_deadline",
+     "targetDate": "2027-03-12",
+     "status": "upcoming",
+     "description": "On-site and cloud infrastructure verification for ISO 27001 certification and SOC 2 Type II attestation.",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "frameworkRef": "Dual Framework Stage 2",
+     "deliverables": [
+      "ISO 27001 Certificate & SOC 2 Type II Report"
+     ],
+     "isAuditDeadline": true,
+     "auditorBody": "Meridian Assurance (fictional auditor)"
+    }
+   ],
+   "calendar": [
+    {
+     "title": "ISO/IEC 27001:2022 Stage 1 Readiness Audit",
+     "category": "audit",
+     "date": "2026-11-18",
+     "time": "09:00 AM EST",
+     "duration": "Full Day (8 hrs)",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO & Engagement Lead",
+     "frameworkRef": "ISO/IEC 27001:2022 Stage 1 (Clauses 4-10 & Annex A)",
+     "recurrence": "Annual",
+     "status": "urgent",
+     "description": "Accredited registrar documentation and scope verification audit. Formal review of ISMS governance, scope document, Statement of Applicability (SoA), and risk treatment plans.",
+     "deliverables": [
+      "Approved ISMS Scope Document & Statement of Applicability (SoA v2.1)",
+      "Management Review Minutes & Internal Audit Findings Report",
+      "Cryptographic Evidence Dossier for Annex A Automated Checks"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Executive Sponsor",
+      "Compliance Officer",
+      "Lead DevOps Architect"
+     ],
+     "auditorBody": "Northbridge Certification (fictional registrar)"
+    },
+    {
+     "title": "Cloud Infrastructure Penetration Testing & External Technical Audit",
+     "category": "audit",
+     "date": "2026-11-26",
+     "time": "10:00 AM EST",
+     "duration": "3 Days",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Head of Security Engineering",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST CSF 2.0 PR.IP-12 / SOC 2 CC7.1",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Third-party white-box and grey-box network penetration test of multi-tenant AWS/Azure infrastructure, API gateway endpoints, and Entra ID tenant configurations.",
+     "deliverables": [
+      "Scope Confirmation of Production API Endpoints",
+      "Rules of Engagement (RoE) Document Signed",
+      "Automated Vulnerability Scan Diff Report"
+     ],
+     "mandatoryForRoles": [
+      "Lead Cloud Architect",
+      "SecOps Engineer"
+     ],
+     "auditorBody": "Redline Offensive Security (fictional)"
+    },
+    {
+     "title": "Q4 2026 NIST CSF 2.0 Governance Review & Maturity Audit",
+     "category": "audit",
+     "date": "2026-12-12",
+     "time": "02:00 PM EST",
+     "duration": "4 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "NIST CSF 2.0 (GV, ID, PR, DE, RS, RC Functions)",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Quarterly internal governance audit evaluating the six NIST CSF 2.0 functions with primary emphasis on the new Govern (GV) category, supply chain risk management, and risk appetite alignment.",
+     "deliverables": [
+      "NIST CSF 2.0 Category Maturity Scorecard",
+      "Evidence Ledger Sample for Protect (PR) & Respond (RS)",
+      "Quarterly Executive Risk Register Presentation"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Client Admin",
+      "Engineering Lead"
+     ],
+     "auditorBody": "Internal vCISO Audit Committee"
+    },
+    {
+     "title": "Annual Third-Party Vendor Security & SOC 2 Report Review",
+     "category": "audit",
+     "date": "2026-12-22",
+     "time": "11:00 AM EST",
+     "duration": "3 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Primary Client Contact",
+     "frameworkRef": "ISO 27001 A.5.19, A.5.20 / NIST CSF 2.0 GV.SC-06",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of SOC 2 Type II reports, ISO certificates, and penetration testing summaries for critical sub-processors (AWS, Datadog, Sendgrid, Auth0, GitHub Enterprise).",
+     "deliverables": [
+      "Vendor Risk Assessment Matrix v4",
+      "Bridge Letters / Attestations for Expired Periods",
+      "Security Exception Approvals"
+     ],
+     "mandatoryForRoles": [
+      "Legal Counsel",
+      "Procurement",
+      "CTO"
+     ],
+     "auditorBody": "FinVault Vendor Risk Committee"
+    },
+    {
+     "title": "ISO/IEC 27001:2022 Stage 2 Final Certification Audit",
+     "category": "audit",
+     "date": "2027-01-14",
+     "time": "08:30 AM EST",
+     "duration": "2 Days",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO/IEC 27001:2022 Stage 2 Comprehensive On-Site/Remote Audit",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Formal accredited certification body audit evaluating live operational controls, incident response records, continuous automated checks, and personnel compliance interviews.",
+     "deliverables": [
+      "Zero Open Major Non-Conformances",
+      "Complete Automated Verification Logs for 93 Annex A Controls",
+      "Formal Recommendation for Accredited Certification"
+     ],
+     "mandatoryForRoles": [
+      "vCISO Lead",
+      "Client Admin",
+      "CTO",
+      "All Sampled System Owners"
+     ],
+     "auditorBody": "Northbridge Certification lead auditors"
+    },
+    {
+     "title": "Q1 2027 SOC 2 Type II Surveillance & Observation Kickoff",
+     "category": "audit",
+     "date": "2027-02-02",
+     "time": "01:00 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "AICPA SOC 2 (Security, Availability, Confidentiality)",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Kickoff meeting with CPA auditor to define population sampling dates, key evidence submission schedules, and automated API evidence sync procedures for the 6-month observation window.",
+     "deliverables": [
+      "Agreed System Description & Control Matrix",
+      "Evidence Request List (PBC List) Integration"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Compliance Officer"
+     ],
+     "auditorBody": "Harborview Audit Partners (fictional)"
+    },
+    {
+     "title": "POL-01: Information Security Policy Annual Recertification",
+     "category": "policy_review",
+     "date": "2026-11-06",
+     "time": "11:00 AM EST",
+     "duration": "1.5 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "ISO 27001 A.5.1 / NIST CSF 2.0 GV.PO-01",
+     "recurrence": "Annual",
+     "status": "urgent",
+     "description": "Mandatory annual executive review and signature of master Information Security Policy, updating AI usage guidelines, remote work standards, and executive approval chains.",
+     "deliverables": [
+      "POL-01 Revision v2.0 Clean & Redlined Copy",
+      "Board of Directors / CEO Sign-off Memorandum",
+      "Employee Distribution & Acknowledgment Plan"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Executive Leadership",
+      "CEO"
+     ],
+     "policyCode": "POL-01"
+    },
+    {
+     "title": "POL-02: Access Control & MFA Enforcement Policy Semi-Annual Review",
+     "category": "policy_review",
+     "date": "2026-11-20",
+     "time": "03:00 PM EST",
+     "duration": "1 hr",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Head of SecOps",
+     "frameworkRef": "ISO 27001 A.5.15, A.5.16 / NIST CSF 2.0 PR.AA-01, PR.AA-03",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Semi-annual policy calibration verifying strict FIDO2/WebAuthn phishing-resistant MFA thresholds, Just-In-Time (JIT) privileged access windows, and break-glass account governance.",
+     "deliverables": [
+      "Entra ID & Google Workspace Conditional Access Policy Diff",
+      "Privileged Role Assignment Audit Sheet (<4 Global Admins)"
+     ],
+     "mandatoryForRoles": [
+      "Identity Admin",
+      "CTO",
+      "vCISO"
+     ],
+     "policyCode": "POL-02"
+    },
+    {
+     "title": "POL-03: Incident Response Plan (IRP) & Tabletop Protocol Review",
+     "category": "policy_review",
+     "date": "2026-12-04",
+     "time": "01:30 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO",
+     "frameworkRef": "ISO 27001 A.5.24 - A.5.28 / NIST CSF 2.0 RS.MA, RS.CO",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Quarterly update of incident classification severities (SEV-1 to SEV-4), external breach notification timelines (HIPAA 60-day, GDPR 72-hour), and escalation rosters.",
+     "deliverables": [
+      "Updated Emergency Contact Roster & Forensic Retainer SLAs",
+      "Ransomware & Cloud Compromise Playbook Revisions",
+      "Executive Briefing Summary"
+     ],
+     "mandatoryForRoles": [
+      "Incident Commander",
+      "Legal Counsel",
+      "PR Lead",
+      "vCISO"
+     ],
+     "policyCode": "POL-03"
+    },
+    {
+     "title": "POL-04: Cryptography & Key Management Policy Recertification",
+     "category": "policy_review",
+     "date": "2026-12-18",
+     "time": "02:00 PM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.8.24 / NIST CSF 2.0 PR.DS-01, PR.DS-02",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of cryptographic algorithms, TLS 1.3 enforcement mandates, KMS envelope encryption standards, and AWS KMS / Azure Key Vault key rotation intervals.",
+     "deliverables": [
+      "Approved Cipher Suite Standard v2.0",
+      "Automated KMS Key Rotation Audit Log",
+      "Deprecation Notice for TLS 1.1 / 1.0 Residual Endpoints"
+     ],
+     "mandatoryForRoles": [
+      "Infrastructure Lead",
+      "Security Architect"
+     ],
+     "policyCode": "POL-04"
+    },
+    {
+     "title": "POL-05: Vulnerability Management & Patching SLA Policy Review",
+     "category": "policy_review",
+     "date": "2027-01-08",
+     "time": "10:00 AM EST",
+     "duration": "1 hr",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.8.8 / NIST CSF 2.0 ID.RA-01, PR.IP-12",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Review of SLAs for critical (14-day) and high (30-day) patch cycles across container images, serverless functions, and third-party dependency scanning.",
+     "deliverables": [
+      "SLA Compliance Metrics for Q4 2026",
+      "Dependabot / Snyk Rule Thresholds"
+     ],
+     "mandatoryForRoles": [
+      "DevOps Lead",
+      "Engineering Managers"
+     ],
+     "policyCode": "POL-05"
+    },
+    {
+     "title": "POL-06: Business Continuity & Disaster Recovery (BCDR) Policy Review",
+     "category": "policy_review",
+     "date": "2027-01-22",
+     "time": "02:00 PM EST",
+     "duration": "2 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.29, A.5.30 / NIST CSF 2.0 RC.RP-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Annual calibration of Recovery Time Objectives (RTO < 4 hrs) and Recovery Point Objectives (RPO < 15 mins), multi-region database failover, and cold backup integrity verification.",
+     "deliverables": [
+      "BCDR Policy Document v2.3 Signed",
+      "Q3 Database Restore Verification Test Log"
+     ],
+     "mandatoryForRoles": [
+      "vCISO",
+      "Cloud Operations Lead",
+      "CTO"
+     ],
+     "policyCode": "POL-06"
+    },
+    {
+     "title": "POL-07: Third-Party & Supply Chain Risk Management Policy Review",
+     "category": "policy_review",
+     "date": "2027-02-06",
+     "time": "11:00 AM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Legal Liaison",
+     "frameworkRef": "ISO 27001 A.5.19 - A.5.22 / NIST CSF 2.0 GV.SC-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Review of vendor onboarding security criteria, sub-processor data processing addenda (DPA), and right-to-audit clauses across SaaS dependencies.",
+     "deliverables": [
+      "Updated Vendor Security Assessment Questionnaire",
+      "Critical Vendor Tiering Matrix 2027"
+     ],
+     "mandatoryForRoles": [
+      "Procurement",
+      "Legal",
+      "vCISO"
+     ],
+     "policyCode": "POL-07"
+    },
+    {
+     "title": "Q4 Mandatory Company-Wide Phishing Simulation & Awareness Cutoff",
+     "category": "training",
+     "date": "2026-11-14",
+     "time": "11:59 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "HR & People Operations",
+     "ownerRole": "Security Awareness Coordinator",
+     "frameworkRef": "ISO 27001 A.6.3 / NIST CSF 2.0 PR.AT-01",
+     "recurrence": "Quarterly",
+     "status": "urgent",
+     "description": "Mandatory quarterly awareness training and simulated spear-phishing click test. Employees who fail must complete micro-learning within 48 hours to maintain email network access.",
+     "deliverables": [
+      "100% Training Completion Report across 52 Employees",
+      "Phishing Simulation Failure & Retraining Statistics (<3% click rate target)",
+      "Escalation List for Non-Compliant Users"
+     ],
+     "mandatoryForRoles": [
+      "All Full-time Employees",
+      "Contractors",
+      "Executives"
+     ]
+    },
+    {
+     "title": "DevOps & Engineering OWASP Top 10 Secure Coding Recertification",
+     "category": "training",
+     "date": "2026-11-28",
+     "time": "05:00 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO & Engineering Manager",
+     "frameworkRef": "ISO 27001 A.8.28 / NIST CSF 2.0 PR.AT-02 / SOC 2 CC7.2",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Interactive secure development training covering OWASP Top 10 (Injection, Broken Object Level Auth, Server-Side Request Forgery, Insecure Cryptography) and secret management in CI/CD.",
+     "deliverables": [
+      "Engineering Staff Completion Certificates",
+      "Hands-on Lab Exercise Scorecards",
+      "GitHub Branch Protection Policy Verification"
+     ],
+     "mandatoryForRoles": [
+      "Software Engineers",
+      "DevOps Engineers",
+      "QA Engineers",
+      "Tech Leads"
+     ]
+    },
+    {
+     "title": "HIPAA ePHI Security & Healthcare Privacy Annual Recertification",
+     "category": "training",
+     "date": "2026-12-15",
+     "time": "11:59 PM EST",
+     "duration": "Cutoff Deadline",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Compliance Officer & vCISO",
+     "frameworkRef": "HIPAA Security Rule 45 CFR \u00a7 164.308(a)(5) / NIST CSF 2.0 PR.AT-01",
+     "recurrence": "Annual",
+     "status": "upcoming",
+     "description": "Annual regulatory training covering protected health information (ePHI) handling, minimum necessary rule, patient rights under HIPAA, and immediate breach notification protocols.",
+     "deliverables": [
+      "Individual Attestation Signatures",
+      "Regulatory Training Record Ledger for HHS/OCR Audit Defense"
+     ],
+     "mandatoryForRoles": [
+      "All Customer-Facing Staff",
+      "Engineering Team",
+      "Support Engineers",
+      "Management"
+     ]
+    },
+    {
+     "title": "Executive & Board Social Engineering & BEC Defense Briefing",
+     "category": "training",
+     "date": "2026-12-29",
+     "time": "04:00 PM EST",
+     "duration": "1 hr Interactive Session",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.4, A.6.3 / NIST CSF 2.0 GV.RR-01, PR.AT-01",
+     "recurrence": "Semi-Annual",
+     "status": "upcoming",
+     "description": "Targeted executive protection briefing covering Business Email Compromise (BEC), CEO impersonation vectors, AI voice deepfake wire fraud defenses, and multi-signature authorization protocols.",
+     "deliverables": [
+      "Executive Defense Playbook Handout",
+      "Wire Transfer Out-of-Band Verification Policy Signed"
+     ],
+     "mandatoryForRoles": [
+      "CEO",
+      "CFO",
+      "CTO",
+      "Finance Controllers",
+      "Board Members"
+     ]
+    },
+    {
+     "title": "Incident Commander Tabletop Response Drill & Triage Protocol",
+     "category": "training",
+     "date": "2027-01-19",
+     "time": "02:00 PM EST",
+     "duration": "3 hrs Simulation Exercise",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "Virtual CISO Lead",
+     "frameworkRef": "ISO 27001 A.5.24 / NIST CSF 2.0 RS.MA-02, RS.CO-03",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Live simulated ransomware and database exfiltration tabletop exercise testing the incident command team, forensic snapshot capture, external counsel coordination, and customer breach notice.",
+     "deliverables": [
+      "Tabletop Exercise After-Action Report (AAR)",
+      "Identified Incident Response Gaps & Action Items Log"
+     ],
+     "mandatoryForRoles": [
+      "Primary Incident Commander",
+      "Secondary Incident Commander",
+      "Legal Counsel",
+      "PR Lead"
+     ]
+    },
+    {
+     "title": "Quarterly Privileged Access & Root Credential Rotation Briefing",
+     "category": "training",
+     "date": "2027-02-12",
+     "time": "01:00 PM EST",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.5.18 / NIST CSF 2.0 PR.AA-05",
+     "recurrence": "Quarterly",
+     "status": "upcoming",
+     "description": "Review of emergency break-glass procedures, SSH certificate authority rotation, and Cloud IAM root credential vaulting practices for all cloud infrastructure custodians.",
+     "deliverables": [
+      "Privileged User Access Recertification Sign-off",
+      "Vaulted Emergency Key Rotation Audit Trail"
+     ],
+     "mandatoryForRoles": [
+      "Cloud Administrators",
+      "DevOps Leads",
+      "Database Administrators"
+     ]
+    },
+    {
+     "title": "Q3 2026 Company-Wide Phishing Resilience Exercise",
+     "category": "training",
+     "date": "2026-10-15",
+     "time": "Completed",
+     "duration": "Cutoff Closed",
+     "owner": "HR & People Operations",
+     "ownerRole": "Awareness Coordinator",
+     "frameworkRef": "ISO 27001 A.6.3 / NIST PR.AT-01",
+     "recurrence": "Quarterly",
+     "status": "completed",
+     "description": "Q3 phishing drill completed with 98.1% pass rate and zero credential submissions across all 52 active staff.",
+     "deliverables": [
+      "Q3 Awareness Completion Ledger",
+      "Follow-up Microlearning Roster"
+     ],
+     "mandatoryForRoles": [
+      "All Corporate Staff"
+     ]
+    },
+    {
+     "title": "POL-08: Remote Work & Mobile Device Management (MDM) Policy Review",
+     "category": "policy_review",
+     "date": "2026-10-22",
+     "time": "Completed",
+     "duration": "1.5 hrs",
+     "owner": "Elena Rostova (CTO)",
+     "ownerRole": "CTO",
+     "frameworkRef": "ISO 27001 A.6.7, A.8.1 / NIST PR.AC",
+     "recurrence": "Annual",
+     "status": "completed",
+     "description": "Approved mandatory BitLocker / FileVault disk encryption and Intune / Workspace device compliance requirement.",
+     "deliverables": [
+      "POL-08 Version 1.2 Signed",
+      "MDM Enrollment Audit Record"
+     ],
+     "policyCode": "POL-08"
+    },
+    {
+     "title": "Q3 2026 Pre-Audit Surveillance Review with vCISO",
+     "category": "audit",
+     "date": "2026-10-28",
+     "time": "Completed",
+     "duration": "3 hrs",
+     "owner": "Marcus Vance, CISSP (vCISO)",
+     "ownerRole": "vCISO Lead",
+     "frameworkRef": "ISO 27001 / NIST CSF 2.0",
+     "recurrence": "Quarterly",
+     "status": "completed",
+     "description": "Executive gap analysis session verifying automated check coverage ahead of Stage 1 external registrar scheduling.",
+     "deliverables": [
+      "Stage 1 Readiness Assessment Document",
+      "Corrective Action Plan for Failing Checks"
+     ],
+     "auditorBody": "vCISO Advisory Practice"
+    }
+   ],
+   "questionnaire": {
+    "title": "Enterprise Vendor Security Questionnaire",
+    "customer": "Acme Health Systems (fictional prospect)",
+    "items": [
+     {
+      "category": "Authentication & Access",
+      "question": "Does your organization enforce Multi-Factor Authentication (MFA) for all administrative and user logins?"
+     },
+     {
+      "category": "Data Protection & Encryption",
+      "question": "What cryptographic encryption standards are utilized to protect customer data at rest and in transit?"
+     },
+     {
+      "category": "Privileged Access",
+      "question": "How many individuals have permanent super-administrator or global administrator access to production systems?"
+     },
+     {
+      "category": "Software Development & Repositories",
+      "question": "Are code changes subjected to peer review and automated security scanning prior to production deployment?"
+     },
+     {
+      "category": "Incident Response & Breach Notification",
+      "question": "What is your procedure and SLA for notifying clients in the event of a confirmed security incident or data breach?"
+     },
+     {
+      "category": "Vulnerability Management",
+      "question": "How frequently are dependencies and software vulnerabilities scanned and remediated?"
+     },
+     {
+      "category": "Identity Lifecycle",
+      "question": "Describe your procedure for offboarding employees and revoking access credentials upon termination."
+     },
+     {
+      "category": "Logging & Monitoring",
+      "question": "Are system and administrator activities logged, and where are audit logs retained?"
+     },
+     {
+      "category": "Business Continuity & Disaster Recovery",
+      "question": "What are your stated Recovery Point Objective (RPO) and Recovery Time Objective (RTO)?"
+     },
+     {
+      "category": "Governance & Security Leadership",
+      "question": "Does your organization have a designated Chief Information Security Officer (CISO) or dedicated security lead?"
+     },
+     {
+      "category": "Device Management",
+      "question": "Are company-managed workstations enrolled in an endpoint management solution with mandatory full-disk encryption?"
+     },
+     {
+      "category": "Data Protection & Encryption",
+      "question": "Are database and storage encryption keys managed by the vendor or customer-managed with rotation?"
+     },
+     {
+      "category": "Physical & Environmental Security",
+      "question": "Do you operate on-premise physical data centers, or are workloads hosted in certified public cloud facilities?"
+     },
+     {
+      "category": "Third-Party Risk",
+      "question": "How do you evaluate and monitor the security posture of third-party SaaS vendors and sub-processors?"
+     },
+     {
+      "category": "Employee Security Training",
+      "question": "Do employees undergo mandatory background checks and security awareness training?"
+     },
+     {
+      "category": "Access Control",
+      "question": "Are legacy protocols such as POP, IMAP, and Basic Authentication disabled?"
+     },
+     {
+      "category": "Software Development & Repositories",
+      "question": "How does your organization prevent secrets (API keys, passwords) from being checked into source repositories?"
+     },
+     {
+      "category": "Authentication & Access",
+      "question": "Is device trust or device health verified before allowing access to internal corporate tools?"
+     },
+     {
+      "category": "Vulnerability Management",
+      "question": "Does your organization conduct independent third-party penetration testing on an annual basis?"
+     },
+     {
+      "category": "Governance & Security Leadership",
+      "question": "Which cybersecurity frameworks is your organization currently aligned with or certified against?"
+     }
+    ]
+   }
+  }
+ ]
+}

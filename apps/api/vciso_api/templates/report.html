@@ -1,0 +1,17 @@
+<html><head><meta charset="utf-8"><style>{% include "_base.css" %}</style></head><body>
+<div class="muted" style="font-size:8pt;letter-spacing:.06em;text-transform:uppercase">Quarterly security report · {{ r.quarter }}</div>
+<h1>{{ org.name }}</h1>
+<div class="meta"><div><span>Prepared by</span>{{ r.vCISOAuthor }}</div><div><span>Status</span>{{ r.status | upper }}{% if r.approvedBy %} · approved by {{ r.approvedBy }}{% endif %}</div></div>
+<div class="kpis">
+  <div class="kpi"><div class="v">{{ r.compliancePosture.isoScore }}%</div><div class="l">ISO 27001 readiness</div></div>
+  <div class="kpi"><div class="v">{{ r.compliancePosture.nistScore }}%</div><div class="l">NIST CSF 2.0</div></div>
+  <div class="kpi"><div class="v">{{ r.compliancePosture.passingChecks }}/{{ r.compliancePosture.totalChecks }}</div><div class="l">Checks passing</div></div>
+  <div class="kpi"><div class="v">{{ r.compliancePosture.criticalGaps }}</div><div class="l">Critical/high gaps</div></div>
+</div>
+<h2>Executive summary</h2><p>{{ r.executiveSummary }}</p>
+<h2>Top risks</h2><ul>{% for x in r.topRisksSummary %}<li>{{ x }}</li>{% endfor %}</ul>
+<h2>Progress this quarter</h2><ul>{% for x in r.quarterlyMilestones %}<li>{{ x }}</li>{% endfor %}</ul>
+<h2>Next 90 days</h2><ul>{% for x in r.next90DaysPlan %}<li>{{ x }}</li>{% endfor %}</ul>
+{% if r.vCISONotes %}<h2>vCISO notes</h2><p>{{ r.vCISONotes }}</p>{% endif %}
+<div class="disclaimer">Bracketed codes reference automated checks, risk register entries and roadmap tasks in the platform. Readiness guidance only.</div>
+</body></html>

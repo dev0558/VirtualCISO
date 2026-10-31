@@ -1,0 +1,6 @@
+{
+  "name": "AI Compliance Automation Platform with vCISO",
+  "description": "Continuous compliance automation for ISO/IEC 27001:2022 & NIST CSF 2.0 with cloud evidence collection, AI policy generation, questionnaire autofill, and vCISO workspace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

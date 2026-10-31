@@ -1,0 +1,54 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+
+permissions: { contents: read }
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env: { POSTGRES_USER: vciso, POSTGRES_PASSWORD: ci-owner-pw, POSTGRES_DB: vciso_test }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U vciso" --health-interval 3s --health-retries 20
+    env:
+      ENV: test
+      DATABASE_URL: postgresql+psycopg://vciso_app:ci-app-pw@localhost:5432/vciso_test
+      MIGRATION_DATABASE_URL: postgresql+psycopg://vciso:ci-owner-pw@localhost:5432/vciso_test
+      SECRET_KEY: ci-only-secret-key-that-is-long-enough-123456
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: sudo apt-get update && sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0
+      - name: Create runtime role (non-owner, NOBYPASSRLS)
+        run: PGPASSWORD=ci-owner-pw psql -h localhost -U vciso -d vciso_test -c "CREATE ROLE vciso_app LOGIN NOBYPASSRLS PASSWORD 'ci-app-pw'"
+      - working-directory: apps/api
+        run: |
+          uv venv --python 3.12
+          uv pip install -e ../../packages/connectors -e ".[dev]"
+      - name: Lint
+        working-directory: apps/api
+        run: .venv/bin/ruff check vciso_api tests ../../packages/connectors
+      - name: Tests (incl. cross-tenant isolation)
+        working-directory: apps/api
+        run: .venv/bin/pytest -q
+      - name: Dependency audit
+        working-directory: apps/api
+        run: .venv/bin/pip-audit --skip-editable || true
+
+  web:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: apps/web } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+      - run: npm run build
+      - run: npm audit --omit=dev --audit-level=high
