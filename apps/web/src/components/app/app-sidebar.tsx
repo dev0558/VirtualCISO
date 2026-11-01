@@ -5,10 +5,11 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   BookCheck, Building2, CalendarClock, ChartNoAxesColumn, ChevronsUpDown, ClipboardList, FileCheck2,
   FileDown, FileText, Fingerprint, LayoutDashboard, ListChecks, LogOut, Map, Plug, Plus, Settings, ShieldAlert,
-  ShieldCheck, Users,
+  Users,
 } from "lucide-react";
 
 import { useOrg } from "@/components/app/org-context";
+import { LogoMark } from "@/components/marketing/logo";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut,
@@ -128,8 +129,8 @@ function OrgSwitcher() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent">
-              <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                <ShieldCheck className="size-4" />
+              <div className="flex aspect-square size-8 items-center justify-center">
+                <LogoMark />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{current?.name ?? state?.organization.name ?? "…"}</span>
