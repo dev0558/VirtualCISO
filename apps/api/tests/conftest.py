@@ -10,7 +10,9 @@ for var in ("DATABASE_URL", "MIGRATION_DATABASE_URL"):
     if url and not url.endswith("/vciso_test"):
         os.environ[var] = re.sub(r"/vciso$", "/vciso_test", url)
 os.environ["ENV"] = "test"
+os.environ["AI_PROVIDER"] = "anthropic"
 os.environ["ANTHROPIC_API_KEY"] = ""  # tests never call the real API
+os.environ["GEMINI_API_KEY"] = ""
 os.environ["S3_ACCESS_KEY"] = ""  # evidence stays inline in tests
 
 import pytest  # noqa: E402

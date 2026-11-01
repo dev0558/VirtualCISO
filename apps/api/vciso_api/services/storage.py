@@ -1,5 +1,6 @@
 """Evidence object storage (S3-compatible, versioned bucket). Failures never block a run:
-the evidence row still carries the sanitized payload and its SHA-256 hash."""
+the evidence row still carries the sanitized payload and its SHA-256 hash, and keeps
+object_key NULL until tasks.retry_unstored_evidence uploads it."""
 import json
 import logging
 from functools import lru_cache
@@ -11,6 +12,10 @@ from botocore.exceptions import BotoCoreError, ClientError
 from ..config import get_settings
 
 log = logging.getLogger(__name__)
+
+
+def is_configured() -> bool:
+    return bool(get_settings().s3_access_key)
 
 
 @lru_cache

@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -26,8 +27,11 @@ class Settings(BaseSettings):
     s3_secret_key: str = ""
     s3_bucket: str = "vciso-evidence"
 
+    ai_provider: Literal["anthropic", "gemini"] = "anthropic"
     anthropic_api_key: str = ""
     anthropic_model: str = "claude-opus-5-5"
+    gemini_api_key: str = ""
+    gemini_model: str = "gemini-3.8-flash"
     voyage_api_key: str = ""
 
     public_app_url: str = "http://localhost:3000"

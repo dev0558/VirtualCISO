@@ -26,8 +26,10 @@ Demo logins (password = `DEMO_PASSWORD` in your `.env`):
 | `admin@healthbridge.example` | Client admin | HealthBridge only |
 | `auditor@healthbridge.example` | Auditor | HealthBridge, read-only |
 
-Set `ANTHROPIC_API_KEY` in `.env` to enable Claude for policy drafting, questionnaire answers and
-reports. Without it, the platform uses vetted templates and retrieval-only answers (still cited and
+Set `AI_PROVIDER` (`anthropic` or `gemini`) and that provider's key (`ANTHROPIC_API_KEY` or
+`GEMINI_API_KEY`) in `.env` to enable AI for policy drafting, questionnaire answers and reports. Use
+Gemini with real client data only on a billed Cloud project: Google's unpaid tier may use prompts to
+improve its products and lets human reviewers read them. Without it, the platform uses vetted templates and retrieval-only answers (still cited and
 confidence-scored).
 
 ## Repository

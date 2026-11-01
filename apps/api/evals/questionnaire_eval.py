@@ -3,7 +3,7 @@ HealthBridge demo tenant. Measures:
   - source accuracy: answerable questions cite at least one expected source
   - abstention: unanswerable questions are flagged with no confident answer
   - review share: fraction of answers flagged for human review
-Nothing is persisted (the transaction is rolled back). Uses Claude when ANTHROPIC_API_KEY is set,
+Nothing is persisted (the transaction is rolled back). Uses the configured AI provider when its key is set,
 otherwise the retrieval-only fallback.
 
     python evals/questionnaire_eval.py [--org-slug healthbridge-demo]
@@ -16,7 +16,6 @@ from sqlalchemy import select
 
 from vciso_api.ai import llm
 from vciso_api.ai import questionnaire as qa
-from vciso_api.config import get_settings
 from vciso_api.db import session_scope
 from vciso_api.models import Answer, Organization
 from vciso_api.seed import owner_session
@@ -85,7 +84,7 @@ def main() -> int:
             print(f"{a.question_number:>2}  {'✓' if ok else '✗':3} {a.confidence:>4} {'yes' if a.needs_review else 'no':4}  {q[:60]}  ->  {', '.join(refs) or '—'}")
         flagged = sum(a.needs_review for a in answers)
         db.rollback()
-    print("\nmode:", "Claude (" + get_settings().anthropic_model + ")" if llm.enabled() else "retrieval-only fallback")
+    print("\nmode:", llm.describe() if llm.enabled() else "retrieval-only fallback")
     print(f"source accuracy (answerable):   {correct}/{answerable} = {100 * correct / answerable:.0f}%")
     print(f"correct abstention (unanswerable): {abstain_ok}/{unanswerable}")
     print(f"flagged for human review:       {flagged}/{len(answers)} = {100 * flagged / len(answers):.0f}%")

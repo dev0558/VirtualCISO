@@ -17,4 +17,13 @@ USER app
 WORKDIR /srv/apps/api
 ENV SEED_DIR=/srv/seed
 EXPOSE 8000
+
+FROM base AS test
+USER root
+RUN pip install "/srv/apps/api[dev]"
+USER app
+CMD ["pytest", "-q"]
+
+# Last stage, so a plain build produces the runtime image without dev dependencies.
+FROM base AS runtime
 CMD ["sh", "-c", "alembic -c /srv/db/alembic.ini upgrade head && uvicorn vciso_api.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*'"]

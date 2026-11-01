@@ -13,9 +13,7 @@ seed:
 	docker compose exec api python -m vciso_api.seed --demo
 
 test:
-	docker compose exec -e DATABASE_URL=postgresql+psycopg://vciso_app:$$(grep ^APP_DB_PASSWORD .env | cut -d= -f2)@postgres:5432/vciso_test \
-	  -e MIGRATION_DATABASE_URL=postgresql+psycopg://vciso:$$(grep ^POSTGRES_PASSWORD .env | cut -d= -f2)@postgres:5432/vciso_test \
-	  -e ENV=test api pytest -q
+	docker compose run --rm --build test
 
 eval:
 	docker compose exec api python evals/questionnaire_eval.py

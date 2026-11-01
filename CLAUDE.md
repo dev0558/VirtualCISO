@@ -8,7 +8,7 @@ prototype lives in `buildit/` and is kept only as a UI reference — do not run 
 - `apps/api` — Python 3.12, FastAPI, SQLAlchemy 2, Alembic, Pydantic v2
 - `apps/worker` — Celery + Redis (daily + on-demand check runs)
 - `packages/connectors` — read-only connectors: Microsoft Graph, Google Admin SDK, GitHub REST
-- PostgreSQL 16 + row-level security + pgvector; S3-compatible object storage for evidence (SeaweedFS locally); Claude API for AI
+- PostgreSQL 16 + row-level security + pgvector; S3-compatible object storage for evidence (SeaweedFS locally); Claude API or Gemini API for AI (`AI_PROVIDER`)
 - `seed/` — frameworks, controls, checks, mappings, policy templates (data, not code)
 
 ## Non-negotiable rules

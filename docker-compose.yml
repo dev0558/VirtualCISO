@@ -12,8 +12,11 @@ x-api-env: &api-env
   S3_ACCESS_KEY: ${S3_ACCESS_KEY}
   S3_SECRET_KEY: ${S3_SECRET_KEY}
   S3_BUCKET: vciso-evidence
+  AI_PROVIDER: ${AI_PROVIDER:-anthropic}
   ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
   ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-5-5}
+  GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+  GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.8-flash}
   PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:3000}
   DEMO_PASSWORD: ${DEMO_PASSWORD:-}
 
@@ -51,6 +54,10 @@ services:
       S3_SECRET_KEY: ${S3_SECRET_KEY}
     volumes: [objectdata:/data]
     ports: ["127.0.0.1:8333:8333"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8333/healthz"]
+      interval: 3s
+      retries: 40
 
   api:
     build: { context: ., dockerfile: apps/api/Dockerfile }
@@ -58,7 +65,7 @@ services:
     depends_on:
       postgres: { condition: service_healthy }
       redis: { condition: service_started }
-      objectstore: { condition: service_started }
+      objectstore: { condition: service_healthy }
     ports: ["127.0.0.1:8000:8000"]
 
   worker:
@@ -81,6 +88,18 @@ services:
       API_INTERNAL_URL: http://api:8000
     depends_on: [api]
     ports: ["127.0.0.1:3000:3000"]
+
+  # `make test`: not started by `up`. Dev dependencies live only in this image.
+  test:
+    profiles: [test]
+    build: { context: ., dockerfile: apps/api/Dockerfile, target: test }
+    environment:
+      <<: *api-env
+      ENV: test
+      DATABASE_URL: postgresql+psycopg://vciso_app:${APP_DB_PASSWORD}@postgres:5432/vciso_test
+      MIGRATION_DATABASE_URL: postgresql+psycopg://vciso:${POSTGRES_PASSWORD}@postgres:5432/vciso_test
+    depends_on:
+      postgres: { condition: service_healthy }
 
 volumes:
   pgdata:
