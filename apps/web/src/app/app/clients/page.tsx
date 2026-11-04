@@ -1,5 +1,6 @@
 "use client";
 
+import { DemoBanner } from "@/components/app/demo-banner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
@@ -27,6 +28,7 @@ export default function ClientsPage() {
 
   return (
     <div className="bg-muted/30 min-h-svh">
+      <DemoBanner />
       <header className="bg-background border-b">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
           <Logo href="/app/clients" />

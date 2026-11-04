@@ -1,0 +1,586 @@
+{
+ "datapulse-demo": {
+  "10": {
+   "answer": "Organization: DataPulse Analytics AI Classification: Internal & Auditor Facing Version: 1.2 Approved by: Elena Rostova (Chief Technology Officer) Effective Date: October 15, 2026",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § Information Security Policy",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 47
+  },
+  "2": {
+   "answer": "We protect customer data using universal AES-256 encryption at rest and TLS 1.3 in transit across our environment.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 100
+  },
+  "3": {
+   "answer": "Our Access Control Policy limits permanent Global Administrator assignments to a maximum of 4 accounts. Automated checks confirm that super-administrator privileges are currently held by 2 accounts.",
+   "citedSources": [
+    {
+     "name": "Access Control Policy § 2. Privileged Access Management",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    },
+    {
+     "name": "Super Admin accounts limited (≤3) (passed)",
+     "reference": "GWS-SUP-02",
+     "type": "check"
+    }
+   ],
+   "confidence": 95
+  },
+  "4": {
+   "answer": "Automated security scanning is active across our repositories, including secret scanning with 100% push protection coverage and CodeQL code scanning with zero open critical alerts. However, specific policies regarding mandatory peer review procedures are not detailed in the provided sources and require confirmation.",
+   "citedSources": [
+    {
+     "name": "No open critical code scanning alerts (passed)",
+     "reference": "GH-CSN-04",
+     "type": "check"
+    },
+    {
+     "name": "Secret scanning enabled on all repositories (passed)",
+     "reference": "GH-SEC-03",
+     "type": "check"
+    }
+   ],
+   "confidence": 70
+  },
+  "5": {
+   "answer": "We enforce core security principles including continuous compliance monitoring and data protection; however, our specific incident response procedures and client breach notification SLAs are not detailed in the provided sources and require confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 20
+  },
+  "6": {
+   "answer": "Automated vulnerability management tools are utilized, with code scanning reporting zero critical severity open alerts and secret scanning broadly enabled. Dependabot security updates are currently active on 81.3% of repositories and work is underway to expand coverage, though specific scanning frequencies and remediation timelines require confirmation.",
+   "citedSources": [
+    {
+     "name": "Dependabot security updates enabled (warning)",
+     "reference": "GH-DEP-06",
+     "type": "check"
+    },
+    {
+     "name": "No open critical code scanning alerts (passed)",
+     "reference": "GH-CSN-04",
+     "type": "check"
+    }
+   ],
+   "confidence": 75
+  },
+  "7": {
+   "answer": "Our Access Control Policy mandates that Human Resources notify IT Operations within 2 hours of any employee termination, and inactive accounts over 60 days are automatically disabled. An automated check identified lingering inactive or suspended accounts, which are currently being remediated to ensure complete deprovisioning.",
+   "citedSources": [
+    {
+     "name": "Access Control Policy § 3. Access Reviews & Deprovisioning",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    },
+    {
+     "name": "Suspended and inactive (60+ days) accounts deprovisioned (failed)",
+     "reference": "GWS-INA-03",
+     "type": "check"
+    }
+   ],
+   "confidence": 90
+  },
+  "8": {
+   "answer": "Yes, system admin and user login audit logs are accessible via the Reports API for investigation and retention. Additionally, privileged access elevation is actively monitored with real-time alerts sent to our security channel.",
+   "citedSources": [
+    {
+     "name": "Workspace audit logs accessible (passed)",
+     "reference": "GWS-AUD-08",
+     "type": "check"
+    },
+    {
+     "name": "Access Control Policy § 2. Privileged Access Management",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    }
+   ],
+   "confidence": 90
+  },
+  "9": {
+   "answer": "Our information security policies govern computing infrastructure and continuous compliance monitoring, but specific Recovery Point Objective (RPO) and Recovery Time Objective (RTO) targets are not stated in the provided sources and require confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 1. Purpose & Scope",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 20
+  }
+ },
+ "finvault-demo": {
+  "1": {
+   "answer": "We mandate multi-factor authentication across all administrative, corporate, and developer interfaces according to our Information Security Policy. All administrator accounts (100%) have multi-factor authentication enrolled, and 100% of active Google Workspace users are enrolled. Complete enforcement across all active user accounts is currently being finalized, with 97.1% registered in Entra ID and 91.2% enforced in Google Workspace.",
+   "citedSources": [
+    {
+     "name": "MFA registered for all active users (warning)",
+     "reference": "M365-MFA-01",
+     "type": "check"
+    },
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "2-Step Verification enforced for all active users (warning)",
+     "reference": "GWS-MFA-01",
+     "type": "check"
+    },
+    {
+     "name": "All administrators have 2SV enrolled (passed)",
+     "reference": "GWS-ADM-04",
+     "type": "check"
+    }
+   ],
+   "confidence": 90
+  },
+  "10": {
+   "answer": "Yes, FinVault Payments maintains dedicated security leadership roles. Our Chief Technology Officer (CTO) holds executive accountability for technology risk, while our Virtual Chief Information Security Officer (vCISO) formulates security strategy, maintains the risk register, orchestrates third-party audits, and conducts quarterly reviews.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 2. Leadership Commitment & Roles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Information Security Policy § Information Security Policy",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 95
+  },
+  "11": {
+   "answer": "Company workstations are enrolled in Microsoft Intune for device management, with automated compliance checks reporting 98.1% compliance across managed devices. Additionally, our security principles mandate universal AES-256 encryption at rest across infrastructure.",
+   "citedSources": [
+    {
+     "name": "Managed devices compliant (≥95%) (passed)",
+     "reference": "M365-DEV-10",
+     "type": "check"
+    },
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 85
+  },
+  "12": {
+   "answer": "Our Information Security Policy mandates universal AES-256 encryption at rest across computing infrastructure. However, the provided sources do not specify whether database and storage encryption keys are vendor-managed or customer-managed with rotation, so this detail requires confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 30
+  },
+  "13": {
+   "answer": "Our security policy scope covers cloud services, including Microsoft 365, GitHub, and production cloud environments, with continuous monitoring against ISO/IEC 27001:2022 and NIST CSF 2.0 baselines. The provided sources do not state whether we operate on-premise physical data centers, so cloud facility details require confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 1. Purpose & Scope",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 75
+  },
+  "14": {
+   "answer": "Third-party risk and vendors are evaluated through quarterly reviews and third-party audits orchestrated by our Virtual Chief Information Security Officer (vCISO). In addition, we actively monitor third-party OAuth application grants to ensure unreviewed high-risk permissions are not assigned to external SaaS apps.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 2. Leadership Commitment & Roles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "No unreviewed high-risk OAuth app grants (30 days) (passed)",
+     "reference": "GWS-APP-06",
+     "type": "check"
+    }
+   ],
+   "confidence": 85
+  },
+  "15": {
+   "answer": "All personnel are required to complete mandatory annual security awareness training and adhere to topic-specific security policies. However, the provided sources do not mention background check procedures, so that point requires confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 2. Leadership Commitment & Roles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 75
+  },
+  "16": {
+   "answer": "Currently, legacy authentication protocols (including POP, IMAP, and basic authentication) are not fully blocked, as an automated check failed due to legacy auth blocking and Security Defaults being disabled; this issue is being remediated. Multi-factor authentication is otherwise mandatory across corporate accounts.",
+   "citedSources": [
+    {
+     "name": "Legacy authentication blocked (failed)",
+     "reference": "M365-LEG-04",
+     "type": "check"
+    },
+    {
+     "name": "Access Control Policy § 1. Identity & Credential Standards",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    }
+   ],
+   "confidence": 95
+  },
+  "17": {
+   "answer": "We enforce automated secret scanning and push protection across 100% of our active repositories to prevent credentials and API keys from being checked in. Additionally, our Acceptable Use Policy explicitly prohibits pasting credentials or proprietary code into external public tools.",
+   "citedSources": [
+    {
+     "name": "Acceptable Use Policy § 2. Permitted & Prohibited Activities",
+     "reference": "POL-05 v1.0",
+     "type": "policy"
+    },
+    {
+     "name": "Secret scanning enabled on all repositories (passed)",
+     "reference": "GH-SEC-03",
+     "type": "check"
+    }
+   ],
+   "confidence": 95
+  },
+  "18": {
+   "answer": "Yes, we enforce Zero Trust principles and manage device health using Microsoft Intune, with 98.1% of managed devices currently reporting a compliant state. Corporate access is anchored in Entra ID with mandatory multi-factor authentication.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Access Control Policy § 1. Identity & Credential Standards",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    },
+    {
+     "name": "Managed devices compliant (≥95%) (passed)",
+     "reference": "M365-DEV-10",
+     "type": "check"
+    }
+   ],
+   "confidence": 90
+  },
+  "19": {
+   "answer": "Our virtual Chief Information Security Officer (vCISO) is responsible for orchestrating third-party audits, but the provided policies do not explicitly confirm whether annual independent penetration tests are performed. This point requires confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 2. Leadership Commitment & Roles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 30
+  },
+  "2": {
+   "answer": "We enforce universal AES-256 encryption for customer data at rest and TLS 1.3 for data in transit across our infrastructure.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 95
+  },
+  "20": {
+   "answer": "Our organization maintains automated continuous monitoring aligned against ISO/IEC 27001:2022 and NIST CSF 2.0 baselines. This framework alignment provides continuous compliance monitoring but does not represent a formal certification.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 95
+  },
+  "3": {
+   "answer": "Per our Access Control Policy, permanent Global Administrator assignments are restricted to no more than 4 accounts. Currently, we maintain 2 Google Workspace Super Administrator accounts and 3 Microsoft 365 Global Administrator accounts.",
+   "citedSources": [
+    {
+     "name": "Access Control Policy § 2. Privileged Access Management",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    },
+    {
+     "name": "Super Admin accounts limited (≤3) (passed)",
+     "reference": "GWS-SUP-02",
+     "type": "check"
+    },
+    {
+     "name": "Global Administrator count restricted (2–4) (passed)",
+     "reference": "M365-ADM-02",
+     "type": "check"
+    }
+   ],
+   "confidence": 95
+  },
+  "4": {
+   "answer": "We utilize automated security scanning across our code repositories, including 100% coverage for secret scanning push protection and CodeQL code scanning, which currently has zero open critical severity alerts. However, explicit details regarding mandatory peer review workflows prior to deployment are not detailed in the provided sources and require confirmation.",
+   "citedSources": [
+    {
+     "name": "No open critical code scanning alerts (passed)",
+     "reference": "GH-CSN-04",
+     "type": "check"
+    },
+    {
+     "name": "Secret scanning enabled on all repositories (passed)",
+     "reference": "GH-SEC-03",
+     "type": "check"
+    }
+   ],
+   "confidence": 60
+  },
+  "5": {
+   "answer": "The provided sources do not specify our client notification procedures or SLA timelines following a confirmed security breach; this point needs confirmation. Our available documentation covers core security principles and internal HR notification requirements, but client breach notification protocols are not included.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Access Control Policy § 3. Access Reviews & Deprovisioning",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    }
+   ],
+   "confidence": 30
+  },
+  "6": {
+   "answer": "We utilize automated scanning tools to continuously identify and address vulnerabilities, with Dependabot security updates enabled across 100% of active repositories and CodeQL code scanning active (currently showing 0 critical and 1 high alert). Specific remediation SLA schedules or scanning frequencies are not explicitly stated in the sources and need confirmation.",
+   "citedSources": [
+    {
+     "name": "Dependabot security updates enabled (passed)",
+     "reference": "GH-DEP-06",
+     "type": "check"
+    },
+    {
+     "name": "No open critical code scanning alerts (passed)",
+     "reference": "GH-CSN-04",
+     "type": "check"
+    }
+   ],
+   "confidence": 70
+  },
+  "7": {
+   "answer": "Under our Access Control Policy, Human Resources must notify IT Operations of any employee termination within 2 hours to trigger offboarding. Furthermore, accounts inactive for more than 60 days are automatically disabled, and automated system checks confirm there are currently zero suspended or dormant accounts.",
+   "citedSources": [
+    {
+     "name": "Access Control Policy § 3. Access Reviews & Deprovisioning",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    },
+    {
+     "name": "Suspended and inactive (60+ days) accounts deprovisioned (passed)",
+     "reference": "GWS-INA-03",
+     "type": "check"
+    }
+   ],
+   "confidence": 95
+  },
+  "8": {
+   "answer": "Yes, directory and administrator activities are logged, with audit logs actively produced and readable via API in both Microsoft Entra ID and Google Workspace. Additionally, privileged access elevations are monitored with alerts sent to our security channel, though specific audit log retention locations require confirmation.",
+   "citedSources": [
+    {
+     "name": "Workspace audit logs accessible (passed)",
+     "reference": "GWS-AUD-08",
+     "type": "check"
+    },
+    {
+     "name": "Directory audit logging available (passed)",
+     "reference": "M365-LOG-06",
+     "type": "check"
+    },
+    {
+     "name": "Access Control Policy § 2. Privileged Access Management",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    }
+   ],
+   "confidence": 80
+  },
+  "9": {
+   "answer": "We do not have documentation in the provided sources specifying our Recovery Point Objective (RPO) or Recovery Time Objective (RTO). Current policies address core security principles and administrative controls, so these specific recovery metrics require confirmation.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 1. Purpose & Scope",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 20
+  }
+ },
+ "healthbridge-demo": {
+  "1": {
+   "answer": "Yes, we enforce Multi-Factor Authentication (MFA) across all administrative, corporate, and developer interfaces as mandated by our Information Security Policy. Automated checks confirm that 100% of active Entra ID user accounts have registered MFA methods, and 2FA is required for all GitHub organization members and collaborators.",
+   "citedSources": [
+    {
+     "name": "MFA registered for all active users (passed)",
+     "reference": "M365-MFA-01",
+     "type": "check"
+    },
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    },
+    {
+     "name": "Organisation requires two-factor authentication (passed)",
+     "reference": "GH-2FA-01",
+     "type": "check"
+    }
+   ],
+   "confidence": 95
+  },
+  "10": {
+   "answer": "Organization: HealthBridge Technologies Classification: Internal & Auditor Facing Version: 1.2 Approved by: Elena Rostova (Chief Technology Officer) Effective Date: October 15, 2026",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § Information Security Policy",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 48
+  },
+  "2": {
+   "answer": "We enforce universal AES-256 encryption for customer data and electronic protected health information (ePHI) at rest. For data in transit, we utilize TLS 1.3 encryption across our computing infrastructure and cloud environments.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 95
+  },
+  "3": {
+   "answer": "Our policy stipulates that permanent Global Administrator assignments must not exceed 4 accounts. However, an automated system check identified 6 active Global Administrator accounts, which is currently non-compliant and undergoing remediation.",
+   "citedSources": [
+    {
+     "name": "Access Control Policy § 2. Privileged Access Management",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    },
+    {
+     "name": "Global Administrator count restricted (2–4) (failed)",
+     "reference": "M365-ADM-02",
+     "type": "check"
+    }
+   ],
+   "confidence": 90
+  },
+  "4": {
+   "answer": "We perform automated security scanning across active repositories, including secret scanning and code scanning (CodeQL), which currently shows zero open critical code alerts. However, the provided sources do not explicitly address peer review requirement policies, so that specific procedure needs confirmation.",
+   "citedSources": [
+    {
+     "name": "No open critical code scanning alerts (passed)",
+     "reference": "GH-CSN-04",
+     "type": "check"
+    },
+    {
+     "name": "Secret scanning enabled on all repositories (passed)",
+     "reference": "GH-SEC-03",
+     "type": "check"
+    }
+   ],
+   "confidence": 45
+  },
+  "5": {
+   "answer": "The provided documentation does not contain our client breach notification SLA or response procedures following a confirmed incident. This point requires confirmation with our security and legal teams.",
+   "citedSources": [
+    {
+     "name": "Information Security Policy § 3. Core Security Principles",
+     "reference": "POL-01 v1.2",
+     "type": "policy"
+    }
+   ],
+   "confidence": 20
+  },
+  "6": {
+   "answer": "We maintain continuous automated dependency scanning with Dependabot security updates enabled across 100% of our active repositories. Automated code scanning is also active and currently reflects zero open critical code scanning alerts. Specific scanning schedules or SLA timeframes for remediation are not detailed in the available sources and require confirmation.",
+   "citedSources": [
+    {
+     "name": "Dependabot security updates enabled (passed)",
+     "reference": "GH-DEP-06",
+     "type": "check"
+    },
+    {
+     "name": "No open critical code scanning alerts (passed)",
+     "reference": "GH-CSN-04",
+     "type": "check"
+    }
+   ],
+   "confidence": 75
+  },
+  "7": {
+   "answer": "Under our Access Control Policy, Human Resources is required to notify IT Operations of any employee termination within 2 hours to prompt immediate deprovisioning. Additionally, access reviews of privileged roles and guest collaborators are conducted every 90 days, and accounts inactive for more than 60 days are automatically disabled.",
+   "citedSources": [
+    {
+     "name": "Access Control Policy § 3. Access Reviews & Deprovisioning",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    }
+   ],
+   "confidence": 95
+  },
+  "8": {
+   "answer": "Directory audit logging is active in Entra ID to produce readable audit logs for investigations, and privileged elevation events trigger automated alerts to our security channel. However, the exact retention duration and log storage location details are not stated in the available sources and require confirmation.",
+   "citedSources": [
+    {
+     "name": "Directory audit logging available (passed)",
+     "reference": "M365-LOG-06",
+     "type": "check"
+    },
+    {
+     "name": "Access Control Policy § 2. Privileged Access Management",
+     "reference": "POL-02 v1.1",
+     "type": "policy"
+    }
+   ],
+   "confidence": 75
+  }
+ }
+}

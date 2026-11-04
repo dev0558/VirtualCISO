@@ -13,6 +13,7 @@ app = FastAPI(title="SecuraVantage API", version="1.0.0",
               docs_url="/api/docs" if settings.is_dev else None, openapi_url="/api/openapi.json")
 
 SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
+DEMO_ALLOWED_WRITES = {"/api/v1/auth/login", "/api/v1/auth/logout", "/api/v1/public/leads"}
 
 
 @app.middleware("http")
@@ -22,6 +23,9 @@ async def csrf_and_headers(request: Request, call_next):
             and not request.url.path.startswith("/api/v1/public/") \
             and request.headers.get("x-requested-with") != "securavantage":
         return JSONResponse({"detail": "Missing CSRF header"}, status_code=403)
+    if settings.demo_read_only and request.method not in SAFE_METHODS and request.url.path not in DEMO_ALLOWED_WRITES:
+        return JSONResponse({"detail": "This is a read-only demo. Get in touch to try it with your own data."},
+                            status_code=403)
     response = await call_next(request)
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"

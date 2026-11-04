@@ -5,6 +5,7 @@ import { use } from "react";
 import { AppSidebar } from "@/components/app/app-sidebar";
 import { useMe } from "@/components/app/me-context";
 import { OrgProvider } from "@/components/app/org-context";
+import { DemoBanner } from "@/components/app/demo-banner";
 import { SiteHeader } from "@/components/app/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
@@ -18,6 +19,7 @@ export default function OrgLayout({ children, params }: { children: React.ReactN
       >
         <AppSidebar variant="inset" />
         <SidebarInset>
+          <DemoBanner />
           <SiteHeader />
           <div className="@container/main flex flex-1 flex-col">{children}</div>
         </SidebarInset>

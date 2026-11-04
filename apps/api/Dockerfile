@@ -26,4 +26,4 @@ CMD ["pytest", "-q"]
 
 # Last stage, so a plain build produces the runtime image without dev dependencies.
 FROM base AS runtime
-CMD ["sh", "-c", "alembic -c /srv/db/alembic.ini upgrade head && uvicorn vciso_api.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*'"]
+CMD ["sh", "-c", "if [ \"$DEMO_BOOTSTRAP\" = 1 ]; then python /srv/db/demo_bootstrap.py; else alembic -c /srv/db/alembic.ini upgrade head; fi && uvicorn vciso_api.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*'"]

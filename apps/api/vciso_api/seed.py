@@ -98,13 +98,26 @@ def _d(s: str | None) -> date | None:
     return date.fromisoformat(s[:10]) if s else None
 
 
+def _apply_saved_answers(slug: str, answers: list[Answer]) -> None:
+    """Pre-generated draft answers (seed/demo/answers.json), so a demo needs no AI key. Still unapproved."""
+    path = get_settings().seed_dir / "demo" / "answers.json"
+    saved = json.loads(path.read_text()).get(slug, {}) if path.exists() else {}
+    for a in answers:
+        if s := saved.get(str(a.question_number)):
+            a.answer, a.confidence, a.cited_sources = s["answer"], s["confidence"], s["citedSources"]
+            a.needs_review = a.confidence < qa.REVIEW_THRESHOLD or not a.cited_sources
+
+
 def seed_demo(db: Session, password: str) -> None:
     data = json.loads((get_settings().seed_dir / "demo" / "tenants.json").read_text())
     vciso = _user(db, "vciso@securavantage.example", "Marcus Vance", password)
     for t in data["tenants"]:
         slug = f"{t['slug']}-demo"
-        if db.scalars(select(Organization).where(Organization.slug == slug)).first():
-            print(f"skip {slug} (exists)")
+        if existing := db.scalars(select(Organization).where(Organization.slug == slug)).first():
+            _apply_saved_answers(slug, list(db.scalars(select(Answer).where(Answer.organization_id == existing.id,
+                                                                            Answer.human_approved.is_(False)))))
+            db.commit()
+            print(f"skip {slug} (exists; saved answers refreshed)")
             continue
         o = t["org"]
         domain = o["primaryContact"].split("@")[-1]
@@ -182,6 +195,7 @@ def seed_demo(db: Session, password: str) -> None:
         db.flush()
         db.refresh(q)
         qa.autofill(db, org.id, list(q.answers))
+        _apply_saved_answers(slug, list(q.answers))
         report_gen.generate(db, org, report_gen.current_quarter(), author="Marcus Vance, CISSP, CISA (vCISO)")
         org.profile = {**policy_gen.PROFILE_DEFAULTS, "security_owner": "Marcus Vance (vCISO)",
                        "incident_contact": f"security@{domain}"}

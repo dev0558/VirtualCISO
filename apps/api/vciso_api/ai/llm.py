@@ -29,6 +29,8 @@ class AIUnavailable(Exception):
 
 def enabled() -> bool:
     s = get_settings()
+    if s.demo_read_only:
+        return False
     return bool(s.gemini_api_key if s.ai_provider == "gemini" else s.anthropic_api_key)
 
 
@@ -38,6 +40,8 @@ def describe() -> str:
 
 
 def structured(system: str, user: str, schema: type[T], *, effort: str = "medium", max_tokens: int = 16000) -> T:
+    if get_settings().demo_read_only:
+        raise AIUnavailable("AI is disabled in the read-only demo")
     if get_settings().ai_provider == "gemini":
         return _gemini_structured(system, user, schema, max_tokens=max_tokens)
     return _anthropic_structured(system, user, schema, effort=effort, max_tokens=max_tokens)
