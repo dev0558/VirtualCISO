@@ -7,6 +7,7 @@ import { Meter, MetricCard } from "@/components/app/metric-card";
 import { useOrg } from "@/components/app/org-context";
 import { EmptyState, PageBody } from "@/components/app/page";
 import { SeverityBadge, StatusBadge } from "@/components/app/status";
+import { GuideFigure } from "@/components/marketing/guide-figure";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -50,6 +51,20 @@ export default function Dashboard() {
 
   return (
     <PageBody>
+      <Card className="flex-row items-end justify-between gap-4 overflow-hidden py-0 shadow-xs">
+        <div className="min-w-0 space-y-1 py-5 pl-6">
+          <div className="font-semibold">
+            {attention.length === 0
+              ? "Every automated check is passing."
+              : `${attention.length} ${attention.length === 1 ? "check needs" : "checks need"} attention.`}
+          </div>
+          <p className="text-muted-foreground text-sm">
+            {attention[0] ? <>Start with <Link href={`${base}/controls`} className="text-foreground underline underline-offset-4">{attention[0].name}</Link>.</> : "Your next scheduled run keeps this up to date."}
+          </p>
+        </div>
+        <GuideFigure bust className="mr-4 hidden w-40 shrink-0 sm:block" />
+      </Card>
+
       <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
         <MetricCard
           label="ISO 27001:2022 readiness"

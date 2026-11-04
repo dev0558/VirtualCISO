@@ -1,5 +1,6 @@
 "use client";
 
+import { CONTACT_HREF, DEMO_MODE } from "@/lib/demo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -72,7 +73,11 @@ export default function LoginPage() {
           </Button>
           {step === "password" && (
             <p className="text-muted-foreground text-center text-sm">
-              New to SecuraVantage? <Link href="/signup" className="text-foreground underline underline-offset-4">Create an account</Link>
+              {DEMO_MODE ? (
+                <>Need demo access? <a href={CONTACT_HREF} className="text-foreground underline underline-offset-4">Get in touch</a></>
+              ) : (
+                <>New to SecuraVantage? <Link href="/signup" className="text-foreground underline underline-offset-4">Create an account</Link></>
+              )}
             </p>
           )}
         </form>

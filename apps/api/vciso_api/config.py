@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-3.8-flash"
     voyage_api_key: str = ""
 
+    demo_read_only: bool = False  # public demo: refuse all changes and all AI calls
+
     public_app_url: str = "http://localhost:3000"
     seed_dir: Path = REPO_ROOT / "seed"
 

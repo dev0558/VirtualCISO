@@ -89,7 +89,8 @@ def signup(body: SignupIn, request: Request, response: Response, db: Session = D
 @router.post("/login")
 def login(body: LoginIn, request: Request, response: Response, db: Session = Depends(get_db)):
     email = body.email.lower()
-    hit(f"login:{client_ip(request)}:{email}", limit=8, window=900)
+    # Demo visitors share one login and, behind the web proxy, one forwarded IP. Accounts there can't change anything.
+    hit(f"login:{client_ip(request)}:{email}", limit=500 if get_settings().demo_read_only else 8, window=900)
     user = db.scalars(select(User).where(User.email == email)).first()
     if not user or not verify_password(body.password, user.password_hash):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Email or password is incorrect")

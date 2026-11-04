@@ -1,0 +1,96 @@
+/* Guide character animations, from the Bytebash brand kit. All motion is CSS. */
+@keyframes fig-breathe {
+  50% {
+    transform: translateY(5px);
+  }
+}
+.fig-body {
+  animation: fig-breathe 3.2s ease-in-out infinite;
+}
+@keyframes fig-look {
+  0%,
+  100% {
+    transform: rotate(3deg);
+  }
+  45% {
+    transform: rotate(5deg);
+  }
+  65% {
+    transform: rotate(-3deg);
+  }
+}
+.fig-head {
+  animation: fig-look 8s ease-in-out infinite;
+}
+@keyframes fig-blink {
+  0%,
+  46%,
+  50%,
+  88%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  48%,
+  90% {
+    transform: scaleY(0.08);
+  }
+}
+.fig-blink {
+  animation: fig-blink 5.5s linear infinite;
+}
+@keyframes fig-pupils {
+  0%,
+  40%,
+  100% {
+    transform: translateX(3px);
+  }
+  55%,
+  80% {
+    transform: translateX(-5px);
+  }
+}
+.fig-pupils {
+  animation: fig-pupils 8s ease-in-out infinite;
+}
+@keyframes fig-scan {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+.fig-scan-arm {
+  animation: fig-scan 4s ease-in-out infinite;
+}
+@keyframes fig-wave {
+  0%,
+  8%,
+  16%,
+  24%,
+  32%,
+  100% {
+    transform: rotate(10deg);
+  }
+  4%,
+  12%,
+  20%,
+  28% {
+    transform: rotate(-16deg);
+  }
+}
+.fig-wave-hand {
+  animation: fig-wave 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig-body,
+  .fig-head,
+  .fig-blink,
+  .fig-pupils,
+  .fig-scan-arm,
+  .fig-wave-hand {
+    animation: none;
+  }
+}
